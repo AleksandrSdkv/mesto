@@ -1,0 +1,9 @@
+.profile__avatar {
+    width: 120px;
+    height: 120px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: #C4C4C4;
+    background-image: url(../../../image/Кусто.png);
+    border-radius: 50%;
+}
