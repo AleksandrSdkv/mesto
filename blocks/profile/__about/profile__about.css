@@ -1,7 +1,15 @@
 .profile__about {
     color: #fff;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 18px;
     line-height: 22px;
     margin: 16px 0 0 0;
+}
+
+@media screen and (max-width: 666px) {
+    .profile__about {
+        font-size: 14px;
+        line-height: 16px;
+        margin: 14px 0 0 0;
+    }
 }
