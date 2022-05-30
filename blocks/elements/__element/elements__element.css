@@ -1,0 +1,35 @@
+.elements__element {
+    max-width: min-content;
+    max-height: 361px;
+    background-color: white;
+    overflow: hidden;
+    border-radius: 10px;
+    position: relative;
+}
+
+.elements__mask-group {
+    background: #C4C4C4;
+}
+
+.elements__group {
+    background-image: url(../../../image/VectorLike.svg);
+    background-repeat: no-repeat;
+    background-size: 22px 19px;
+    width: 22px;
+    height: 19px;
+    margin: 0;
+    position: absolute;
+    right: 20px;
+    bottom: 30px;
+}
+
+h2 {
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+    max-width: 198px;
+    margin: 25px 0 31px 21px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
