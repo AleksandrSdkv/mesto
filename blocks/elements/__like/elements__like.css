@@ -1,0 +1,7 @@
+.elements__like {
+    background-image: url(../../../image/VectorLike.svg);
+    width: 22px;
+    height: 19px;
+    margin-right: 30px;
+    cursor: pointer;
+}
