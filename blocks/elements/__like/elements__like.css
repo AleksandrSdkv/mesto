@@ -5,3 +5,7 @@
     margin-right: 30px;
     cursor: pointer;
 }
+
+.elements__like:hover {
+    opacity: .5;
+}
