@@ -1,6 +1,7 @@
 .profile__info {
-    max-width: 336px;
-    display: flex;
+    max-width: 500px;
+    display: grid;
+    grid-template-columns: 1fr 24px;
     flex-wrap: wrap;
     align-items: center;
     justify-self: flex-start;
