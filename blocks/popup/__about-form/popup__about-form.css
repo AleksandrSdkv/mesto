@@ -1,0 +1,23 @@
+.popup__about-form {
+    width: 358px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 0;
+    margin-top: 22px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    height: 33px;
+}
+
+.popup__about-form:focus {
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 465px) {
+    .popup__about-form {
+        width: 238px;
+    }
+}

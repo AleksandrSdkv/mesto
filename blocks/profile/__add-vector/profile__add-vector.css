@@ -1,13 +1,16 @@
-.vector {
+.profile__add-vector {
+    background: none;
+    border: none;
     width: 22px;
     height: 22px;
     background-image: url(../../../image/Vector.svg);
     background-repeat: no-repeat;
     background-size: cover;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 666px) {
-    .vector {
+    .profile__add-vector {
         width: 16px;
         height: 16px;
     }
