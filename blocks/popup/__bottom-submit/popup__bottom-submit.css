@@ -1,11 +1,13 @@
 .popup__bottom-submit {
     width: 358px;
     height: 50px;
+    background: none;
+    outline: none;
     background: #000000;
     border-radius: 2px;
     color: white;
     border: none;
-    margin: 48px 36px 37px 36px;
+    margin-top: 48px;
     padding: 14px 0 18px 0;
     cursor: pointer;
     font-style: normal;
@@ -23,6 +25,9 @@
 @media screen and (max-width: 465px) {
     .popup__bottom-submit {
         width: 238px;
+        height: 46px;
         margin: 45px 0 0 0;
+        font-size: 14px;
+        line-height: 17px;
     }
 }

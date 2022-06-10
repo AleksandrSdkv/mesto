@@ -1,0 +1,12 @@
+.popup__form_name {}
+
+.popup__form-name:focus {
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 465px) {
+    .popup__form-name {
+        width: 238px;
+    }
+}

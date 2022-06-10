@@ -1,0 +1,9 @@
+.popup__form-input_name {
+    border: none;
+    font-style: normal;
+}
+
+.popup__form-name:focus {
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}

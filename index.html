@@ -14,8 +14,7 @@
     <!-- Шапка -->
 
     <header class="header">
-        <div class="header__logo"></div>
-        <div class="header__line"></div>
+        <a href="#" class="header__logo"></a>
     </header>
 
     <!-- Основной блок -->
@@ -25,58 +24,56 @@
             <div class="profile__avatar"></div>
             <div class="profile__info">
                 <h1 class="profile__name">Жак-Ив Кусто</h1>
-                <button class="profile__edit-button" type="submit"></button>
+                <button class="profile__edit-button" type="button"></button>
                 <p class="profile__about">Исследователь океана</p>
             </div>
-            <label class="profile__add-button" for="add-button">
-              <button class="profile__add-vector" id="add-button" type="submit"></button>
-            </label>
+            <button class="profile__add-vector" id="add-button" type="button"></button>
         </section>
 
         <!-- Блок Элементы -->
 
         <section class="elements">
-            <div class="elements__element">
+            <ul class="elements__element">
                 <img class="elements__mask-group" src="image/kirill-pershin-1404681-unsplash.png" alt="Гора Эльбрус">
                 <h2 class="elements__place-name">Гора Эльбрус</h2>
-                <div class="elements__like">
-                </div>
-            </div>
+                <button type="button" class="elements__like">
+                </button>
+            </ul>
 
-            <div class="elements__element">
+            <ul class="elements__element">
                 <img class="elements__mask-group" src="image/Волга.jpg" alt="Волга">
                 <h2 class="elements__place-name">Река Волга</h2>
-                <div class="elements__like">
-                </div>
-            </div>
+                <button type="button" class="elements__like">
+                </button>
+            </ul>
 
-            <div class="elements__element">
+            <ul class="elements__element">
                 <img class="elements__mask-group" src="image/Камское-Устье.jpg" alt="Камское Устье">
                 <h2 class="elements__place-name">Камское Устье</h2>
-                <div class="elements__like">
-                </div>
-            </div>
+                <button type="button" class="elements__like">
+                </button>
+            </ul>
 
-            <div class="elements__element">
+            <ul class="elements__element">
                 <img class="elements__mask-group" src="image/Карачаевск.jpg" alt="Карачаевск">
                 <h2 class="elements__place-name">Карачаевск</h2>
-                <div class="elements__like">
-                </div>
-            </div>
+                <button type="button" class="elements__like">
+                </button>
+            </ul>
 
-            <div class="elements__element">
+            <ul class="elements__element">
                 <img class="elements__mask-group" src="image/Домбай.png" alt="Домбай">
                 <h2 class="elements__place-name">Домбай</h2>
-                <div class="elements__like">
-                </div>
-            </div>
+                <button type="button" class="elements__like">
+                </button>
+            </ul>
 
-            <div class="elements__element">
+            <ul class="elements__element">
                 <img class="elements__mask-group" src="image/imgonline-com-ua-Resize-8LzQrK2lVx51V.jpg" alt="Ласточкино гнездо">
                 <h2 class="elements__place-name">Ласточкино гнездо</h2>
-                <div class="elements__like">
-                </div>
-            </div>
+                <button type="button" class="elements__like">
+                </button>
+            </ul>
         </section>
     </main>
 
@@ -86,19 +83,19 @@
     </footer>
 
     <!-- Попап -->
-    <div class="popup popup_opened">
-        <form class="popup__edit-form">
-            <button class="popup__button-close"></button>
+    <div class="popup">
+        <form class="popup__form-container" name="popup-form">
+            <button class="popup__button-close" type="button"></button>
             <h2 class="popup__form-title">Редактировать профиль</h2>
-            <fieldset class="popup__form-container">
-                <input class="popup__form-name" type="text" placeholder="Имя пользователя">
-                <input class="popup__about-form" type="text" placeholder="Описание">
+            <fieldset class="popup__form">
+                <input class="popup__form-input popup__form-input_name" type="text" name="form-name" placeholder="Имя пользователя">
+                <input class="popup__form-input popup__form-input_about" type="text" name="form-about" placeholder="Описание">
                 <button class="popup__bottom-submit" type="submit">Сохранить</button>
             </fieldset>
         </form>
     </div>
 
-    <script src="index.js"></script>
+    <script src="blocks/scripts/index.js"></script>
 </body>
 
 </html>

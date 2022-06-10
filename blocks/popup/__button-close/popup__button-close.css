@@ -3,6 +3,7 @@
     height: 32px;
     border: none;
     background: none;
+    outline: none;
     background-image: url(../../../image/CloseconSVG.svg);
     padding: 0;
     cursor: pointer;

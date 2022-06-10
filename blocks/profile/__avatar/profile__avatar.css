@@ -4,7 +4,7 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-color: #C4C4C4;
-    background-image: url(../../../image/Кусто.png);
+    background-image: url(../../../image/Kusto.png);
     border-radius: 50%;
 }
 
@@ -19,6 +19,6 @@
     .profile__avatar {
         width: 120px;
         height: 120px;
-        margin-bottom: 26px;
+        margin-bottom: 22px;
     }
 }

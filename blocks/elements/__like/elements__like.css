@@ -1,11 +1,17 @@
 .elements__like {
+    border: none;
+    background: none;
+    outline: none;
+    padding: 0;
+    background-repeat: no-repeat;
     background-image: url(../../../image/VectorLike.svg);
     width: 22px;
     height: 19px;
     margin-right: 30px;
-    cursor: pointer;
+    transition: opacity .3s;
 }
 
 .elements__like:hover {
     opacity: .5;
+    cursor: pointer;
 }
