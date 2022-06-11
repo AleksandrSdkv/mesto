@@ -27,7 +27,7 @@
                 <button class="profile__edit-button" type="button"></button>
                 <p class="profile__about">Исследователь океана</p>
             </div>
-            <button class="profile__add-vector" id="add-button" type="button"></button>
+            <button class="profile__add-button" id="add-button" type="button"></button>
         </section>
 
         <!-- Блок Элементы -->
@@ -35,42 +35,43 @@
         <section class="elements">
             <ul class="elements__list">
                 <li class="elements__element">
-                    <img class="elements__mask-group" src="image/kirill-pershin-1404681-unsplash.png" alt="Гора Эльбрус">
+                    <div class="elements__group"><img class="elements__mask-group" src="image/kirill-pershin-1404681-unsplash.png" alt="Гора Эльбрус"></div>
+
                     <h2 class="elements__place-name">Гора Эльбрус</h2>
                     <button type="button" class="elements__like">
                 </button>
                 </li>
 
                 <li class="elements__element">
-                    <img class="elements__mask-group" src="image/Волга.jpg" alt="Волга">
+                    <div class="elements__group"> <img class="elements__mask-group" src="image/Волга.jpg" alt="Волга"></div>
                     <h2 class="elements__place-name">Река Волга</h2>
                     <button type="button" class="elements__like">
                 </button>
                 </li>
 
                 <li class="elements__element">
-                    <img class="elements__mask-group" src="image/Камское-Устье.jpg" alt="Камское Устье">
+                    <div class="elements__group"> <img class="elements__mask-group" src="image/Камское-Устье.jpg" alt="Камское Устье"></div>
                     <h2 class="elements__place-name">Камское Устье</h2>
                     <button type="button" class="elements__like">
                 </button>
                 </li>
 
                 <li class="elements__element">
-                    <img class="elements__mask-group" src="image/Карачаевск.jpg" alt="Карачаевск">
+                    <div class="elements__group"> <img class="elements__mask-group" src="image/Карачаевск.jpg" alt="Карачаевск"></div>
                     <h2 class="elements__place-name">Карачаевск</h2>
                     <button type="button" class="elements__like">
                 </button>
                 </li>
 
                 <li class="elements__element">
-                    <img class="elements__mask-group" src="image/Домбай.png" alt="Домбай">
+                    <div class="elements__group"> <img class="elements__mask-group" src="image/Домбай.png" alt="Домбай"></div>
                     <h2 class="elements__place-name">Домбай</h2>
                     <button type="button" class="elements__like">
                 </button>
                 </li>
 
                 <li class="elements__element">
-                    <img class="elements__mask-group" src="image/imgonline-com-ua-Resize-8LzQrK2lVx51V.jpg" alt="Ласточкино гнездо">
+                    <div class="elements__group"><img class="elements__mask-group" src="image/imgonline-com-ua-Resize-8LzQrK2lVx51V.jpg" alt="Ласточкино гнездо"></div>
                     <h2 class="elements__place-name">Ласточкино гнездо</h2>
                     <button type="button" class="elements__like">
                 </button>
@@ -86,18 +87,20 @@
 
     <!-- Попап -->
     <div class="popup">
-        <form class="popup__form-container" name="popup-form">
-            <button class="popup__button-close" type="button"></button>
-            <h2 class="popup__form-title">Редактировать профиль</h2>
-            <fieldset class="popup__form">
-                <input class="popup__form-input popup__form-input_name" type="text" name="form-name" placeholder="Имя пользователя">
-                <input class="popup__form-input popup__form-input_about" type="text" name="form-about" placeholder="Описание">
-                <button class="popup__bottom-submit" type="submit">Сохранить</button>
-            </fieldset>
-        </form>
+        <div class="popup__overlay">
+            <form class="popup__form-container" name="popup-form">
+                <button class="popup__button-close" type="button"></button>
+                <h2 class="popup__form-title">Редактировать профиль</h2>
+                <fieldset class="popup__form">
+                    <input class="popup__form-input popup__form-input_type_name" type="text" name="form-name" placeholder="Имя пользователя">
+                    <input class="popup__form-input popup__form-input_type_about" type="text" name="form-about" placeholder="Описание">
+                    <button class="popup__bottom-submit" type="submit">Сохранить</button>
+                </fieldset>
+            </form>
+        </div>
     </div>
 
-    <script src="blocks/scripts/index.js"></script>
+    <script src="scripts/index.js"></script>
 </body>
 
 </html>

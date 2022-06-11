@@ -1,15 +1,20 @@
 .popup__form {
+    background: none;
+    outline: none;
+    border: none;
     display: flex;
     flex-direction: column;
-    border: none;
+    align-items: center;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
     padding: 0;
-    order: 1;
-    margin: 49px 36px 37px 36px;
+    margin: 0;
 }
 
-@media screen and (max-width: 465px) {
+@media screen and (max-width: 470px) {
     .popup__form {
-        width: 238px;
-        margin: 0 22px 25px 22px;
+        margin: 0 22px 0;
     }
 }

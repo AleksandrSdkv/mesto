@@ -7,7 +7,7 @@
     background-color: #000000;
     border-radius: 2px;
     color: white;
-    margin-top: 48px;
+    margin: 48px 36px 37px;
     padding: 14px 0 18px 0;
     font-style: normal;
     font-weight: 400;
@@ -15,18 +15,18 @@
     line-height: 22px;
     text-align: center;
     transition: opacity .4s;
+    cursor: pointer;
 }
 
 .popup__bottom-submit:hover {
     opacity: .8;
-    cursor: pointer;
 }
 
 @media screen and (max-width: 465px) {
     .popup__bottom-submit {
         width: 238px;
         height: 46px;
-        margin: 45px 0 0 0;
+        margin: 45px 0 25px 0;
         font-size: 14px;
         line-height: 17px;
     }

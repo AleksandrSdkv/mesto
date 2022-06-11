@@ -1,10 +1,6 @@
 .popup {
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 2;
     display: none;
-    background: rgba(0, 0, 0, 0.5);
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
 }

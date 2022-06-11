@@ -5,15 +5,13 @@
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
     position: relative;
-    top: 195px;
+    z-index: 2;
     box-sizing: border-box;
 }
 
 @media screen and (max-width: 465px) {
     .popup__form-container {
         max-width: 282px;
-        max-height: 320px;
         margin: 0 19px 0 19px;
-        top: 123px;
     }
 }
