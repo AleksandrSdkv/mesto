@@ -87,14 +87,14 @@
 
     <!-- Попап -->
     <div class="popup">
-        <div class="popup__overlay">
-            <form class="popup__form-container" name="popup-form">
-                <button class="popup__button-close" type="button"></button>
-                <h2 class="popup__form-title">Редактировать профиль</h2>
-                <fieldset class="popup__form">
-                    <input class="popup__form-input popup__form-input_type_name" type="text" name="form-name" placeholder="Имя пользователя">
-                    <input class="popup__form-input popup__form-input_type_about" type="text" name="form-about" placeholder="Описание">
-                    <button class="popup__bottom-submit" type="submit">Сохранить</button>
+        <div class="popup__container">
+            <button class="popup__button-close" type="button"></button>
+            <form class="form" name="popup-form">
+                <h2 class="form__title">Редактировать профиль</h2>
+                <fieldset class="form__group">
+                    <input class="form__input form__input_type_name" type="text" name="form-name" placeholder="Имя пользователя">
+                    <input class="form__input form__input_type_about" type="text" name="form-about" placeholder="Описание">
+                    <button class="form__bottom-submit" type="submit">Сохранить</button>
                 </fieldset>
             </form>
         </div>

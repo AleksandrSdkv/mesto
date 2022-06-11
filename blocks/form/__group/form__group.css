@@ -1,4 +1,4 @@
-.popup__form {
+.form__group {
     background: none;
     outline: none;
     border: none;
@@ -13,8 +13,8 @@
     margin: 0;
 }
 
-@media screen and (max-width: 470px) {
-    .popup__form {
+@media screen and (max-width: 480px) {
+    .form__group {
         margin: 0 22px 0;
     }
 }

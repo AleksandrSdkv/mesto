@@ -35,13 +35,16 @@
 /* Блок Popup */
 
 @import url(../blocks/popup/popup.css);
-@import url(../blocks/popup/__overlay/popup__overlay.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
-@import url(../blocks/popup/__form-container/popup__form-container.css);
-@import url(../blocks/popup/__bottom-submit/popup__bottom-submit.css);
+@import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/__button-close/popup__button-close.css);
-@import url(../blocks/popup/__form/popup__form.css);
-@import url(../blocks/popup/__form-input/popup__form-input.css);
-@import url(../blocks/popup/__form-input/_type/popup__form-input_type_name.css);
-@import url(../blocks/popup/__form-input/_type/popup__form-input_type_about.css);
-@import url(../blocks/popup/__form-title/popup__form-title.css);
+
+/* Блок Form намного проще, спасибо* */
+
+@import url(../blocks/form/form.css);
+@import url(../blocks/form/__input/form__input.css);
+@import url(../blocks/form/__input/_type/form__input_type_about.css);
+@import url(../blocks/form/__input/_type/form__input_type_name.css);
+@import url(../blocks/form/__bottom-submit/form__bottom-submit.css);
+@import url(../blocks/form/__title/form__title.css);
+@import url(../blocks/form/__group/form__group.css);

@@ -1,4 +1,4 @@
-.popup__bottom-submit {
+.form__bottom-submit {
     width: 358px;
     height: 50px;
     border: none;
@@ -18,16 +18,22 @@
     cursor: pointer;
 }
 
-.popup__bottom-submit:hover {
+.form__bottom-submit:hover {
     opacity: .8;
 }
 
-@media screen and (max-width: 465px) {
-    .popup__bottom-submit {
-        width: 238px;
+@media screen and (max-width: 480px) {
+    .form__bottom-submit {
+        width: 305px;
         height: 46px;
         margin: 45px 0 25px 0;
         font-size: 14px;
         line-height: 17px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .form__bottom-submit {
+        width: 238px;
     }
 }
