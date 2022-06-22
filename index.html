@@ -27,55 +27,14 @@
                 <button class="profile__edit-button" type="button"></button>
                 <p class="profile__about">Исследователь океана</p>
             </div>
-            <button class="profile__add-button" id="add-button" type="button"></button>
+            <button class="profile__place-button" id="add-button" type="button"></button>
         </section>
 
         <!-- Блок Элементы -->
 
         <section class="elements">
             <ul class="elements__list">
-                <li class="elements__element">
-                    <div class="elements__group"><img class="elements__mask-group" src="image/kirill-pershin-1404681-unsplash.png" alt="Гора Эльбрус"></div>
 
-                    <h2 class="elements__place-name">Гора Эльбрус</h2>
-                    <button type="button" class="elements__like">
-                </button>
-                </li>
-
-                <li class="elements__element">
-                    <div class="elements__group"> <img class="elements__mask-group" src="image/Волга.jpg" alt="Волга"></div>
-                    <h2 class="elements__place-name">Река Волга</h2>
-                    <button type="button" class="elements__like">
-                </button>
-                </li>
-
-                <li class="elements__element">
-                    <div class="elements__group"> <img class="elements__mask-group" src="image/Камское-Устье.jpg" alt="Камское Устье"></div>
-                    <h2 class="elements__place-name">Камское Устье</h2>
-                    <button type="button" class="elements__like">
-                </button>
-                </li>
-
-                <li class="elements__element">
-                    <div class="elements__group"> <img class="elements__mask-group" src="image/Карачаевск.jpg" alt="Карачаевск"></div>
-                    <h2 class="elements__place-name">Карачаевск</h2>
-                    <button type="button" class="elements__like">
-                </button>
-                </li>
-
-                <li class="elements__element">
-                    <div class="elements__group"> <img class="elements__mask-group" src="image/Домбай.png" alt="Домбай"></div>
-                    <h2 class="elements__place-name">Домбай</h2>
-                    <button type="button" class="elements__like">
-                </button>
-                </li>
-
-                <li class="elements__element">
-                    <div class="elements__group"><img class="elements__mask-group" src="image/imgonline-com-ua-Resize-8LzQrK2lVx51V.jpg" alt="Ласточкино гнездо"></div>
-                    <h2 class="elements__place-name">Ласточкино гнездо</h2>
-                    <button type="button" class="elements__like">
-                </button>
-                </li>
             </ul>
         </section>
     </main>
@@ -92,14 +51,42 @@
             <form class="form" name="popup-form">
                 <h2 class="form__title">Редактировать профиль</h2>
                 <fieldset class="form__group">
-                    <input class="form__input form__input_type_name" type="text" name="form-name" placeholder="Имя пользователя">
-                    <input class="form__input form__input_type_about" type="text" name="form-about" placeholder="Описание">
+                    <input class="form__input form__input_type_name" type="text" name="form-name" placeholder="Имя пользователя" required>
+                    <input class="form__input form__input_type_about" type="text" name="form-about" placeholder="Описание" required>
                     <button class="form__bottom-submit" type="submit">Сохранить</button>
                 </fieldset>
             </form>
         </div>
     </div>
-
+    <div class="popup popup_type_place">
+        <div class="popup__container">
+            <button class="popup__button-close" type="button"></button>
+            <form class="form" name="popup-form-place">
+                <h2 class="form__title">Новое место</h2>
+                <fieldset class="form__group">
+                    <input class="form__input form__input_type_name" type="text" name="form-place" placeholder="Название" required>
+                    <input class="form__input form__input_type_about" type="url" name="form-url" placeholder="Ссылка на картинку" required>
+                    <button class="form__bottom-submit" type="submit">Создать</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <div class="popup popup_type_pic">
+        <figure class="popup__container popup__container_for_pic">
+            <button class="popup__button-close popup__button-close_on_pic" type="button"></button>
+            <img src="" class="popup__img" alt="">
+            <figcaption class="popup__caption"></figcaption>
+        </figure>
+    </div>
+    <template id="card_template">
+  <li class="elements__element">
+    <button class="elements__btn-remove" type="button"></button>
+    <div class="elements__group"><img class="elements__mask-group" ></div>
+    <h2 class="elements__place-name"></h2>
+    <button  type="button" class="elements__like">
+</button>
+</li>
+</template>
     <script src="scripts/index.js"></script>
 </body>
 
