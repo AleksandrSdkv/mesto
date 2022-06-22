@@ -5,8 +5,8 @@
     padding: 0;
     background-repeat: no-repeat;
     background-image: url(../../../image/Remove.svg);
-    Width: 18px;
-    Height: 19px;
+    width: 18px;
+    height: 19px;
     transition: opacity .3s;
     cursor: pointer;
     position: absolute;
