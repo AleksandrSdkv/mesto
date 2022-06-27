@@ -26,9 +26,6 @@ const picture = picturePopup.querySelector('.popup__img');
 const picCloseButton = picturePopup.querySelector('.popup__button-close');
 const popupCaption = document.querySelector('.popup__caption');
 
-
-
-
 //удаление карточки
 function removedCard(card) {
     card.remove();
@@ -51,15 +48,9 @@ function submitFormHandler(evt) {
 
 // передает подпись
 function setPopupImageData(img) {
-    picture.src = img.src;
-    picture.alt = img.textContent;
-    popupCaption.textContent = img.textContent;
-
-}
-// передает подпись
-function captionNam(img) {
-    popupCaption.textContent = img.name;
+    picture.src = img.link;
     picture.alt = img.name;
+    popupCaption.textContent = img.name;
 }
 
 function renderCard(cardNewElement) {
@@ -112,18 +103,15 @@ function createNewCard(item) {
     //удаление карты
     const buttonRemove = cardNewElement.querySelector('.elements__btn-remove');
     buttonRemove.addEventListener("click", function() {
-        const element = buttonRemove.closest('.elements__element');
-        element.remove();
+        cardNewElement.remove();
     });
     // открытие карточки
     maskGroupImg.addEventListener('click', function() {
         openPopup(picturePopup);
-        setPopupImageData(maskGroupImg);
-        captionNam(item);
+        setPopupImageData(item);
     });
     return cardNewElement
 }
-
 
 formNewElement.addEventListener('submit', submitFormHandlerPlace); // вызов функции создания карты по клику на кнопку "создать"
 function submitFormHandlerPlace(e) {
