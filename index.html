@@ -44,28 +44,33 @@
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
 
-    <!-- Попап -->
+    <!-- Попап профиля -->
     <div class="popup popup_type_profile">
         <div class="popup__container">
             <button class="popup__button-close" type="button"></button>
-            <form class="form" name="popup-form">
+            <form class="form" name="popup-form" novalidate>
                 <h2 class="form__title">Редактировать профиль</h2>
                 <fieldset class="form__group">
-                    <input class="form__input form__input_type_name" type="text" name="form-name" placeholder="Имя пользователя" required>
-                    <input class="form__input form__input_type_about" type="text" name="form-about" placeholder="Описание" required>
+                    <input id="name-input" class="form__input form__input_type_name" type="text" name="form-name" placeholder="Имя пользователя" required minlength="2" maxlength="40">
+                    <span class="name-input-error form__error-message"></span>
+                    <input id="about-input" class="form__input form__input_type_about" type="text" name="form-about" placeholder="Описание" required minlength="2" maxlength="200">
+                    <span class="about-input-error form__error-message"></span>
                     <button class="form__bottom-submit" type="submit">Сохранить</button>
                 </fieldset>
             </form>
         </div>
     </div>
+    <!-- Попап добавления места -->
     <div class="popup popup_type_place">
         <div class="popup__container">
             <button class="popup__button-close" type="button"></button>
-            <form class="form" name="popup-form-place">
+            <form class="form" name="popup-form-place" novalidate>
                 <h2 class="form__title">Новое место</h2>
                 <fieldset class="form__group">
-                    <input class="form__input form__input_type_name" type="text" name="form-place" placeholder="Название" required>
-                    <input class="form__input form__input_type_about" type="url" name="form-url" placeholder="Ссылка на картинку" required>
+                    <input id="place-input" class="form__input form__input_type_name" type="text" name="form-place" placeholder="Название" required minlength="2" maxlength="30">
+                    <span class="place-input-error form__error-message"></span>
+                    <input id="url-input" class="form__input form__input_type_about" type="url" name="form-url" placeholder="Ссылка на картинку" required>
+                    <span class="url-input-error form__error-message"></span>
                     <button class="form__bottom-submit" type="submit">Создать</button>
                 </fieldset>
             </form>
@@ -87,6 +92,8 @@
 </button>
 </li>
 </template>
+    <script src="scripts/config.js"></script>
+    <script src="scripts/validate.js"></script>
     <script src="scripts/cards.js"></script>
     <script src="scripts/index.js"></script>
 </body>

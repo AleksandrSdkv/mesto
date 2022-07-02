@@ -26,18 +26,26 @@ const picture = picturePopup.querySelector('.popup__img');
 const picCloseButton = picturePopup.querySelector('.popup__button-close');
 const popupCaption = document.querySelector('.popup__caption');
 
+// передает в модуль валидации(validate.js) объект находящиийся в файле config.js
+enableValidation(config);
+
 //удаление карточки
 function removedCard(card) {
     card.remove();
 }
+
 //открытие попапа
 function openPopup(popup) {
     popup.classList.add('popup_opened');
+    document.addEventListener('keydown', closePopupByEsc);
 }
+
 //закрытие попапа
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', closePopupByEsc);
 }
+
 //Отправка формы в профиль
 function submitFormHandler(evt) {
     evt.preventDefault();
@@ -56,12 +64,47 @@ function setPopupImageData(img) {
 function renderCard(cardNewElement) {
     elementList.prepend(cardNewElement);
 }
+
 formElement.addEventListener('submit', submitFormHandler); // открывает создание профиля
 
-// закрытие модального окна создания карточки
+// закрытие попапа по клавише
+function closePopupByEsc(evt) {
+    const popup = document.querySelector('.popup_opened');
+    const form = popup.querySelector('.form');
+    if (evt.code === 'Escape') {
+        closePopup(popup);
+        resetErrorMessage(config, form);
+    }
+}
+
+// закрытие по клику на overlay профиля
+profilePopup.addEventListener('mousedown', (evt) => {
+        if (evt.target === evt.currentTarget) {
+            const form = profilePopup.querySelector('.form');
+            closePopup(profilePopup);
+            resetErrorMessage(config, form);
+        }
+    })
+    // закрытие по клику на overlay сосздания карточек
+newPlacePopup.addEventListener('mousedown', (evt) => {
+    if (evt.target === evt.currentTarget) {
+        const form = newPlacePopup.querySelector('.form');
+        closePopup(newPlacePopup);
+        resetErrorMessage(config, form);
+    }
+})
+
+// закрытие по клику на overlay открытых картинок
+picturePopup.addEventListener('mousedown', (evt) => {
+        if (evt.target === evt.currentTarget) {
+            closePopup(picturePopup);
+        }
+    })
+    // закрытие модального окна создания карточки
 placeCloseButton.addEventListener('click', function() {
     closePopup(newPlacePopup);
 });
+
 // открытие попапа
 profilePlaceButton.addEventListener('click', function() {
     openPopup(newPlacePopup);
@@ -73,9 +116,11 @@ profileEditButton.addEventListener('click', function() {
     jobInput.value = profileAbout.textContent; //перенос работы профия
     openPopup(profilePopup);
 });
+
 // закрытие окна профиля
 popupCloseButton.addEventListener('click', function() {
     closePopup(profilePopup);
+    resetErrorMessage(config, formElement);
 });
 
 // закрытие окна карточки
@@ -89,7 +134,6 @@ initialCards.forEach((item) => {
 })
 
 function createNewCard(item) {
-    console.log(item);
     const cardNewElement = cardTemplate.querySelector('.elements__element').cloneNode(true);
     const maskGroupImg = cardNewElement.querySelector('.elements__mask-group');
     const maskGroupName = cardNewElement.querySelector('.elements__place-name');

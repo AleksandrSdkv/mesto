@@ -52,3 +52,7 @@
 @import url(../blocks/form/__bottom-submit/form__bottom-submit.css);
 @import url(../blocks/form/__title/form__title.css);
 @import url(../blocks/form/__group/form__group.css);
+@import url(../blocks/form/__input-error/form__input-error_active.css);
+@import url(../blocks/form/__input/_type/form__input_type_error.css);
+@import url(../blocks/form/__bottom-submit/_status/form__bottom-submit_status_inactive.css);
+@import url(../blocks/form/__error-message/form__error-message.css);
