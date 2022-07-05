@@ -23,8 +23,10 @@ const hideInputError = (formItem, inputItem, config) => { //прячет оши�
 const toggleButtonState = (inputList, buttonElement, config) => { //регулирует состояние кнопки
     if (hasInvalidInput(inputList)) {
         buttonElement.classList.add(config.inactiveButtonClass);
+        buttonElement.disabled = true;
     } else {
-        buttonElement.classList.remove(config.inactiveButtonClass);
+        buttonElement.classList.remove(config.inactiveButtonClass)
+        buttonElement.disabled = false;
     }
 }
 
@@ -40,8 +42,10 @@ const setEventListeners = (formItem, config) => { //принимает элем�
     });
 };
 
-const resetErrorMessage = (config, form) => { //сбрасывает состояния ошибок, используется при закрытии попапов
+const resetVadlidation = (config, form) => { //сбрасывает состояния ошибок, используется при открытии попапов
     const inputList = Array.from(form.querySelectorAll(config.inputSelector));
+    const buttonElement = form.querySelector(config.submitButtonSelector);
+    toggleButtonState(inputList, buttonElement, config);
     form.reset();
     inputList.forEach((inputItem) => {
         const errorElement = document.querySelector(`.${inputItem.id}-error`);
