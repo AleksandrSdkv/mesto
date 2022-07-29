@@ -1,11 +1,12 @@
 export class Card {
-    constructor(item, setPopupImageData) {
+    constructor(item, setPopupImageData, cardtemplate) {
         this._link = item.link;
         this._name = item.name;
         this._setPopupImageData = setPopupImageData;
+        this._cardTemplate = cardtemplate;
     }
     _getTemplate() {
-        const cardNewElement = document.querySelector("#card_template").content.querySelector(".elements__element").cloneNode(true);
+        const cardNewElement = document.querySelector(this._cardTemplate).content.querySelector(".elements__element").cloneNode(true);
         return cardNewElement
     }
     generateCard() {
@@ -37,6 +38,7 @@ export class Card {
     }
     _handleTrashBtnClick() {
         this._element.remove();
+        this._element = null;
     }
     _handleOpenPopupPic() {
         this._setPopupImageData({ name: this._name, link: this._link });

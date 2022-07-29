@@ -10,6 +10,12 @@
 
 @media screen and (max-width: 480px) {
     .form__input-error_active {
+        width: 310px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .form__input-error_active {
         width: 245px;
     }
 }

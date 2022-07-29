@@ -34,8 +34,8 @@ export class FormValidator {
         errorElement.textContent = '';
     };
 
-    _toggleButtonState(inputList) { //регулирует состояние кнопки
-        if (this._hasInvalidInput(inputList)) {
+    toggleButtonState() { //регулирует состояние кнопки
+        if (this._hasInvalidInput()) {
             this._setDisabledButton();
         } else {
             this._setEnabledButton()
@@ -53,23 +53,15 @@ export class FormValidator {
     }
 
     resetVadlidation = () => { //сбрасывает состояния ошибок, используется при открытии попапов
-        const inputList = Array.from(this._formElement.querySelectorAll(this._config.inputSelector));
-        this._formElement.reset();
-        inputList.forEach((inputItem) => {
-            const errorElement = this._formElement.querySelector(`.${inputItem.id}-error`);
-            inputItem.classList.remove(this._config.inputErrorClass);
-            errorElement.classList.remove(this._config.errorClass);
-            errorElement.textContent = '';
-        });
-        this._toggleButtonState(this._inputList);
+        this._inputList.forEach((inputItem) => this._hideInputError(inputItem));
     }
 
     _setEventListeners = () => { // устанавливвает слушатели
-        this._toggleButtonState(this._inputList);
+        this.toggleButtonState();
         this._inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
                 this._isValidity(inputElement);
-                this._toggleButtonState();
+                this.toggleButtonState();
             });
         });
     };

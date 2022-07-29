@@ -1,5 +1,5 @@
-import { initialCards } from './cards.js';
-import { FormValidator } from './validate.js';
+import { initialCards } from './Cards.js';
+import { FormValidator } from './FormValidator.js';
 import { Card } from './card.js';
 import { config } from './config.js';
 
@@ -19,7 +19,6 @@ const jobInput = profilePopup.querySelector('.form__input_type_about');
 
 const newPlacePopup = document.querySelector('.popup_type_place');
 const formNewElement = newPlacePopup.querySelector('.form');
-const newPlacePopupBtn = newPlacePopup.querySelector('.form__bottom-submit');
 
 const placeName = newPlacePopup.querySelector('.form__input_type_name');
 const placeUrl = newPlacePopup.querySelector('.form__input_type_about');
@@ -46,6 +45,12 @@ function openPopup(popup) {
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', closePopupByEsc);
+    clearInput(popup);
+}
+
+function clearInput(popup) {
+    const form = popup.querySelector('.form');
+    form.reset();
 }
 
 //Отправка формы в профиль
@@ -72,10 +77,7 @@ profileForm.addEventListener('submit', handleProfileFormSubmit); // открыв
 
 popups.forEach((popup) => {
     popup.addEventListener('mousedown', (evt) => {
-        if (evt.target.classList.contains('popup_opened')) {
-            closePopup(popup)
-        }
-        if (evt.target.classList.contains('popup__close')) {
+        if (evt.target.classList.contains('popup_opened') || (evt.target.classList.contains('popup__close'))) {
             closePopup(popup)
         }
     })
@@ -92,19 +94,26 @@ function closePopupByEsc(evt) {
 // открытие попапа профиля  и сброс ошибок валидации
 profilePlaceButton.addEventListener('click', function() {
     validateFormNewElement.resetVadlidation();
+    validateFormNewElement.toggleButtonState();
     openPopup(newPlacePopup);
 });
 
 // Открытие редактирования профиля и сброс ошибок валидации
 profileEditButton.addEventListener('click', function() {
-    validateProfileForm.resetVadlidation();
     openPopup(profilePopup);
+    validateProfileForm.resetVadlidation();
     nameInput.value = profileName.textContent; //перенос имя профия
     jobInput.value = profileAbout.textContent; //перенос работы профия
+    validateProfileForm.toggleButtonState();
 });
 
 
+
+
 formNewElement.addEventListener('submit', submitFormHandlerPlace); // вызов функции создания карты по клику на кнопку "создать"
+function createCardClass(card) { //функция создающая готовую карточку с данными
+    return card.generateCard();
+}
 
 function submitFormHandlerPlace(e) {
     e.preventDefault();
@@ -113,15 +122,16 @@ function submitFormHandlerPlace(e) {
     const card = new Card({
         name,
         link
-    }, setPopupImageData);
+    }, setPopupImageData, '#card_template');
 
-    const cardNewElement = card.generateCard(); // Создаём карточку и возвращаем наружу
+    const cardNewElement = createCardClass(card); // Создаём карточку и возвращаем наружу
     renderCard(cardNewElement);
     closePopup(newPlacePopup);
+
 }
 
 initialCards.forEach((item) => {
-    const card = new Card(item, setPopupImageData);
+    const card = new Card(item, setPopupImageData, '#card_template');
     const cardNewElement = card.generateCard();
     renderCard(cardNewElement);
 })
