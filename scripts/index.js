@@ -1,3 +1,8 @@
+import { initialCards } from './cards.js';
+import { FormValidator } from './validate.js';
+import { Card } from './card.js';
+import { config } from './config.js';
+
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -7,9 +12,6 @@ const profilePopup = document.querySelector('.popup_type_profile');
 const popups = document.querySelectorAll('.popup')
 
 const elementList = document.querySelector('.elements__list');
-const cardTemplate = document.querySelector('#card_template').content;
-
-
 
 const profileForm = profilePopup.querySelector('.form');
 const nameInput = profilePopup.querySelector('.form__input_type_name');
@@ -21,19 +23,18 @@ const newPlacePopupBtn = newPlacePopup.querySelector('.form__bottom-submit');
 
 const placeName = newPlacePopup.querySelector('.form__input_type_name');
 const placeUrl = newPlacePopup.querySelector('.form__input_type_about');
-const formGroup = newPlacePopup.querySelector('.form__group');
+
 const picturePopup = document.querySelector('.popup_type_pic');
 const picture = picturePopup.querySelector('.popup__img');
 
 const popupCaption = document.querySelector('.popup__caption');
 
-// передает в модуль валидации(validate.js) объект находящиийся в файле config.js
-enableValidation(config);
+//активация валидации
+const validateFormNewElement = new FormValidator(config, formNewElement);
+const validateProfileForm = new FormValidator(config, profileForm);
 
-//удаление карточки
-function removedCard(card) {
-    card.remove();
-}
+validateFormNewElement.enableValidation();
+validateProfileForm.enableValidation();
 
 //открытие попапа
 function openPopup(popup) {
@@ -57,6 +58,7 @@ function handleProfileFormSubmit(evt) {
 
 // передает подпись
 function setPopupImageData(img) {
+    openPopup(picturePopup);
     picture.src = img.link;
     picture.alt = img.name;
     popupCaption.textContent = img.name;
@@ -68,8 +70,8 @@ function renderCard(cardNewElement) {
 
 profileForm.addEventListener('submit', handleProfileFormSubmit); // открывает создание профиля
 
-popups.forEach((popup) => { // магический метод выполняющий закрытие выбранного попапа по клику на крестик и, внимание, на оверлей одновременно.
-    popup.addEventListener('mousedown', (evt) => { // бесценный опыт!
+popups.forEach((popup) => {
+    popup.addEventListener('mousedown', (evt) => {
         if (evt.target.classList.contains('popup_opened')) {
             closePopup(popup)
         }
@@ -89,61 +91,37 @@ function closePopupByEsc(evt) {
 
 // открытие попапа профиля  и сброс ошибок валидации
 profilePlaceButton.addEventListener('click', function() {
-    const form = newPlacePopup.querySelector('.form');
-    resetVadlidation(config, form);
+    validateFormNewElement.resetVadlidation();
     openPopup(newPlacePopup);
 });
 
 // Открытие редактирования профиля и сброс ошибок валидации
 profileEditButton.addEventListener('click', function() {
-    const form = profilePopup.querySelector('.form');
-    resetVadlidation(config, form);
+    validateProfileForm.resetVadlidation();
     openPopup(profilePopup);
     nameInput.value = profileName.textContent; //перенос имя профия
     jobInput.value = profileAbout.textContent; //перенос работы профия
 });
 
-initialCards.forEach((item) => {
-    const cardNewElement = createNewCard(item);
-    renderCard(cardNewElement);
-})
-
-function createNewCard(item) {
-    const cardNewElement = cardTemplate.querySelector('.elements__element').cloneNode(true);
-    const maskGroupImg = cardNewElement.querySelector('.elements__mask-group');
-    const maskGroupName = cardNewElement.querySelector('.elements__place-name');
-    maskGroupName.textContent = item.name;
-    maskGroupImg.src = item.link;
-    maskGroupImg.alt = item.link;
-    //постановка лайка
-    cardNewElement.querySelector('.elements__like').addEventListener('click', function(evt) {
-        evt.target.classList.toggle('elements__like_active');
-    });
-    //удаление карты
-    const buttonRemove = cardNewElement.querySelector('.elements__btn-remove');
-    buttonRemove.addEventListener("click", function() {
-        cardNewElement.remove();
-    });
-    // открытие карточки
-    maskGroupImg.addEventListener('click', function() {
-        openPopup(picturePopup);
-        setPopupImageData(item);
-    });
-    return cardNewElement
-}
 
 formNewElement.addEventListener('submit', submitFormHandlerPlace); // вызов функции создания карты по клику на кнопку "создать"
+
 function submitFormHandlerPlace(e) {
     e.preventDefault();
     const link = placeUrl.value;
     const name = placeName.value;
-    const cardNewElement = createNewCard({
+    const card = new Card({
         name,
         link
-    });
+    }, setPopupImageData);
+
+    const cardNewElement = card.generateCard(); // Создаём карточку и возвращаем наружу
     renderCard(cardNewElement);
     closePopup(newPlacePopup);
-    formNewElement.reset();
-    newPlacePopupBtn.disabled = true;
-    newPlacePopupBtn.classList.add('form__bottom-submit_status_inactive');
 }
+
+initialCards.forEach((item) => {
+    const card = new Card(item, setPopupImageData);
+    const cardNewElement = card.generateCard();
+    renderCard(cardNewElement);
+})
