@@ -1,6 +1,6 @@
-import { initialCards } from './Cards.js';
+import { initialCards } from './cards.js';
 import { FormValidator } from './FormValidator.js';
-import { Card } from './card.js';
+import { Card } from './Card.js';
 import { config } from './config.js';
 
 const profileName = document.querySelector('.profile__name');
