@@ -50,7 +50,9 @@ function closePopup(popup) {
 
 function clearInput(popup) {
     const form = popup.querySelector('.form');
-    form.reset();
+    if (form !== null) {
+        form.reset();
+    }
 }
 
 //Отправка формы в профиль
@@ -111,27 +113,24 @@ profileEditButton.addEventListener('click', function() {
 
 
 formNewElement.addEventListener('submit', submitFormHandlerPlace); // вызов функции создания карты по клику на кнопку "создать"
-function createCardClass(card) { //функция создающая готовую карточку с данными
-    return card.generateCard();
+
+function createCardClass(name, link) { //функция создающая готовую карточку с данными
+    const card = new Card({
+        name,
+        link
+    }, setPopupImageData, '#card_template');
+    const cardNewElement = card.generateCard();
+    renderCard(cardNewElement);
 }
 
 function submitFormHandlerPlace(e) {
     e.preventDefault();
     const link = placeUrl.value;
     const name = placeName.value;
-    const card = new Card({
-        name,
-        link
-    }, setPopupImageData, '#card_template');
-
-    const cardNewElement = createCardClass(card); // Создаём карточку и возвращаем наружу
-    renderCard(cardNewElement);
+    createCardClass(name, link);
     closePopup(newPlacePopup);
-
 }
 
 initialCards.forEach((item) => {
-    const card = new Card(item, setPopupImageData, '#card_template');
-    const cardNewElement = card.generateCard();
-    renderCard(cardNewElement);
+    createCardClass(item.name, item.link);
 })
