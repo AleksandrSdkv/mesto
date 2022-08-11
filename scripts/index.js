@@ -2,6 +2,7 @@ import { initialCards } from './cards.js';
 import { FormValidator } from './FormValidator.js';
 import { Card } from './Card.js';
 import { config } from './config.js';
+import { Section } from '../src/Section.js';
 
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
@@ -35,84 +36,19 @@ const validateProfileForm = new FormValidator(config, profileForm);
 validateFormNewElement.enableValidation();
 validateProfileForm.enableValidation();
 
-//открытие попапа
-function openPopup(popup) {
-    popup.classList.add('popup_opened');
-    document.addEventListener('keydown', closePopupByEsc);
-}
-
-//закрытие попапа
-function closePopup(popup) {
-    popup.classList.remove('popup_opened');
-    document.removeEventListener('keydown', closePopupByEsc);
-    clearInput(popup);
-}
-
-function clearInput(popup) {
-    const form = popup.querySelector('.form');
-    if (form !== null) {
-        form.reset();
-    }
-}
-
-//Отправка формы в профиль
-function handleProfileFormSubmit(evt) {
-    evt.preventDefault();
-    profileName.textContent = nameInput.value;
-    profileAbout.textContent = jobInput.value;
-    closePopup(profilePopup);
-}
-
-// передает подпись
-function setPopupImageData(img) {
-    openPopup(picturePopup);
-    picture.src = img.link;
-    picture.alt = img.name;
-    popupCaption.textContent = img.name;
-}
-
-function renderCard(cardNewElement) {
-    elementList.prepend(cardNewElement);
-}
-
-profileForm.addEventListener('submit', handleProfileFormSubmit); // открывает создание профиля
-
-popups.forEach((popup) => {
-    popup.addEventListener('mousedown', (evt) => {
-        if (evt.target.classList.contains('popup_opened') || (evt.target.classList.contains('popup__close'))) {
-            closePopup(popup)
-        }
-    })
-})
-
-// закрытие попапа по клавише
-function closePopupByEsc(evt) {
-    if (evt.code === 'Escape') {
-        const popup = document.querySelector('.popup_opened');
-        closePopup(popup);
-    }
-}
-
-// открытие попапа профиля  и сброс ошибок валидации
-profilePlaceButton.addEventListener('click', function() {
-    validateFormNewElement.resetVadlidation();
-    validateFormNewElement.toggleButtonState();
-    openPopup(newPlacePopup);
-});
-
-// Открытие редактирования профиля и сброс ошибок валидации
-profileEditButton.addEventListener('click', function() {
-    openPopup(profilePopup);
-    validateProfileForm.resetVadlidation();
-    nameInput.value = profileName.textContent; //перенос имя профия
-    jobInput.value = profileAbout.textContent; //перенос работы профия
-    validateProfileForm.toggleButtonState();
-});
+const cardList = new Section({
+        data: initialCards,
+        renderer: (item) => {
+            const element = createCardClass(item.name, item.link)
+            cardList.addItem(element)
+        },
+    },
+    '.elements__list'
+);
+cardList.renderItems()
 
 
 
-
-formNewElement.addEventListener('submit', submitFormHandlerPlace); // вызов функции создания карты по клику на кнопку "создать"
 
 function createCardClass(name, link) { //функция создающая готовую карточку с данными
     const card = new Card({
@@ -120,17 +56,94 @@ function createCardClass(name, link) { //функция создающая го�
         link
     }, setPopupImageData, '#card_template');
     const cardNewElement = card.generateCard();
-    renderCard(cardNewElement);
+    return cardNewElement
+
+}
+console.log(elementList)
+
+
+
+// //открытие попапа
+// function openPopup(popup) {
+//     popup.classList.add('popup_opened');
+//     document.addEventListener('keydown', closePopupByEsc);
+// }
+
+// //закрытие попапа
+// function closePopup(popup) {
+//     popup.classList.remove('popup_opened');
+//     document.removeEventListener('keydown', closePopupByEsc);
+//     clearInput(popup);
+// }
+
+// function clearInput(popup) {
+//     const form = popup.querySelector('.form');
+//     if (form !== null) {
+//         form.reset();
+//     }
+// }
+
+// //Отправка формы в профиль
+// function handleProfileFormSubmit(evt) {
+//     evt.preventDefault();
+//     profileName.textContent = nameInput.value;
+//     profileAbout.textContent = jobInput.value;
+//     closePopup(profilePopup);
+// }
+
+// // передает подпись
+function setPopupImageData(img) {
+    openPopup(picturePopup);
+    picture.src = img.link;
+    picture.alt = img.name;
+    popupCaption.textContent = img.name;
 }
 
-function submitFormHandlerPlace(e) {
-    e.preventDefault();
-    const link = placeUrl.value;
-    const name = placeName.value;
-    createCardClass(name, link);
-    closePopup(newPlacePopup);
-}
+// function renderCard(cardNewElement) {
+//     elementList.prepend(cardNewElement);
+// }
 
-initialCards.forEach((item) => {
-    createCardClass(item.name, item.link);
-})
+
+
+// function submitFormHandlerPlace(e) {
+//     e.preventDefault();
+//     const link = placeUrl.value;
+//     const name = placeName.value;
+//     createCardClass(name, link);
+//     closePopup(newPlacePopup);
+// }
+// profileForm.addEventListener('submit', handleProfileFormSubmit); // открывает создание профиля
+
+// popups.forEach((popup) => {
+//     popup.addEventListener('mousedown', (evt) => {
+//         if (evt.target.classList.contains('popup_opened') || (evt.target.classList.contains('popup__close'))) {
+//             closePopup(popup)
+//         }
+//     })
+// })
+
+// // закрытие попапа по клавише
+// function closePopupByEsc(evt) {
+//     if (evt.code === 'Escape') {
+//         const popup = document.querySelector('.popup_opened');
+//         closePopup(popup);
+//     }
+// }
+
+// // открытие попапа профиля  и сброс ошибок валидации
+// profilePlaceButton.addEventListener('click', function() {
+//     validateFormNewElement.resetVadlidation();
+//     validateFormNewElement.toggleButtonState();
+//     openPopup(newPlacePopup);
+// });
+
+// // Открытие редактирования профиля и сброс ошибок валидации
+// profileEditButton.addEventListener('click', function() {
+//     openPopup(profilePopup);
+//     validateProfileForm.resetVadlidation();
+//     nameInput.value = profileName.textContent; //перенос имя профия
+//     jobInput.value = profileAbout.textContent; //перенос работы профия
+//     validateProfileForm.toggleButtonState();
+// });
+
+// formNewElement.addEventListener('submit', submitFormHandlerPlace); // вызов функции создания карты по клику на кнопку "создать"
