@@ -3,6 +3,7 @@ import { FormValidator } from './FormValidator.js';
 import { Card } from './Card.js';
 import { config } from './config.js';
 import { Section } from '../src/Section.js';
+import { PopupWithImage } from '../src/PopupWithImage.js';
 
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
@@ -43,18 +44,20 @@ const cardList = new Section({
             cardList.addItem(element)
         },
     },
-    '.elements__list'
+    elementList
 );
 cardList.renderItems()
 
 
-
+const popupPice = new PopupWithImage(picturePopup)
 
 function createCardClass(name, link) { //функция создающая готовую карточку с данными
     const card = new Card({
         name,
         link
-    }, setPopupImageData, '#card_template');
+    }, () => {
+        popupPice.open({ name, link });
+    }, '#card_template');
     const cardNewElement = card.generateCard();
     return cardNewElement
 
@@ -63,11 +66,7 @@ console.log(elementList)
 
 
 
-// //открытие попапа
-// function openPopup(popup) {
-//     popup.classList.add('popup_opened');
-//     document.addEventListener('keydown', closePopupByEsc);
-// }
+
 
 // //закрытие попапа
 // function closePopup(popup) {
@@ -92,12 +91,7 @@ console.log(elementList)
 // }
 
 // // передает подпись
-function setPopupImageData(img) {
-    openPopup(picturePopup);
-    picture.src = img.link;
-    picture.alt = img.name;
-    popupCaption.textContent = img.name;
-}
+
 
 // function renderCard(cardNewElement) {
 //     elementList.prepend(cardNewElement);

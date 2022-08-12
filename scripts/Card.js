@@ -1,8 +1,8 @@
 export class Card {
-    constructor(item, setPopupImageData, cardtemplate) {
+    constructor(item, handleCardClick, cardtemplate) {
         this._link = item.link;
         this._name = item.name;
-        this._setPopupImageData = setPopupImageData;
+        this._handleCardClick = handleCardClick;
         this._cardTemplate = cardtemplate;
     }
     _getTemplate() {
@@ -29,7 +29,7 @@ export class Card {
             this._handleTrashBtnClick();
         });
         this.maskGroupImg.addEventListener("click", () => {
-            this._handleOpenPopupPic();
+            this._handleOpenPopupPic({ name: this._name, link: this._link });
         });
 
     }
@@ -41,6 +41,7 @@ export class Card {
         this._element = null;
     }
     _handleOpenPopupPic() {
-        this._setPopupImageData({ name: this._name, link: this._link });
+        this._handleCardClick();
     }
+
 }
