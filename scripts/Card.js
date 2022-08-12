@@ -29,7 +29,7 @@ export class Card {
             this._handleTrashBtnClick();
         });
         this.maskGroupImg.addEventListener("click", () => {
-            this._handleOpenPopupPic({ name: this._name, link: this._link });
+            this._handleCardClick({ name: this._name, link: this._link });
         });
 
     }
@@ -39,9 +39,6 @@ export class Card {
     _handleTrashBtnClick() {
         this._element.remove();
         this._element = null;
-    }
-    _handleOpenPopupPic() {
-        this._handleCardClick();
     }
 
 }

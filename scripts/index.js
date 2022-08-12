@@ -51,20 +51,26 @@ cardList.renderItems()
 
 const popupPice = new PopupWithImage(picturePopup)
 
+
+
+
 function createCardClass(name, link) { //функция создающая готовую карточку с данными
     const card = new Card({
-        name,
-        link
-    }, () => {
-        popupPice.open({ name, link });
-    }, '#card_template');
+            name,
+            link
+        },
+        handleCardClick, '#card_template');
     const cardNewElement = card.generateCard();
     return cardNewElement
 
 }
 console.log(elementList)
 
+function handleCardClick({ name, link }) {
+    popupPice.open({ name, link });
+    popupPice.setEventListeners()
 
+};
 
 
 
