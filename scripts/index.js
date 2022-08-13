@@ -4,6 +4,8 @@ import { Card } from './Card.js';
 import { config } from './config.js';
 import { Section } from '../src/Section.js';
 import { PopupWithImage } from '../src/PopupWithImage.js';
+import { PopupWithForm } from '../src/PopupWithForm.js';
+import { UserInfo } from '../src/UserInfo.js';
 
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
@@ -51,9 +53,6 @@ cardList.renderItems()
 
 const popupPice = new PopupWithImage(picturePopup)
 
-
-
-
 function createCardClass(name, link) { //функция создающая готовую карточку с данными
     const card = new Card({
             name,
@@ -62,15 +61,48 @@ function createCardClass(name, link) { //функция создающая го�
         handleCardClick, '#card_template');
     const cardNewElement = card.generateCard();
     return cardNewElement
-
 }
 console.log(elementList)
 
 function handleCardClick({ name, link }) {
     popupPice.open({ name, link });
     popupPice.setEventListeners()
-
 };
+
+const handleProfileFormSubmit = (formData) => {
+    // Вызов у нового пользователя метода подстановки значений данных из формированных полей формы в formData
+    profileInfo.setUserInfo(formData);
+
+    // Закрыть попап формы Профиля
+    profilePopup.close();
+};
+const popupProfileForm = new PopupWithForm(profilePopup, handleProfileFormSubmit)
+popupProfileForm.setEventListeners();
+
+
+const profileInfo = new UserInfo(profileName, profileAbout);
+// слушатель, который сбрасывает валидацию формы профиля и переносит значения в inputs
+profileEditButton.addEventListener('click', () => {
+    validateProfileForm.resetVadlidation();
+    const profileValue = profileInfo.getUserInfo();
+    nameInput.value = profileValue.name;
+    jobInput.value = profileValue.info;
+    validateProfileForm.toggleButtonState();
+    popupProfileForm.open()
+})
+
+
+
+// // Обработчик на кнопку редактирования: сбрасываем ошибки предыдущего заполнения и открываем форму
+
+// buttonEdit.addEventListener('click', () => {
+//     //Вызываем публичный метод сброса формы класса FormValidator
+//     formValidators['profile-form'].resetFormValidator();
+//     openPopupEdit();
+// });
+
+
+
 
 
 
@@ -81,20 +113,14 @@ function handleCardClick({ name, link }) {
 //     clearInput(popup);
 // }
 
-// function clearInput(popup) {
-//     const form = popup.querySelector('.form');
-//     if (form !== null) {
-//         form.reset();
-//     }
-// }
+function clearInput(popup) {
+    const form = popup.querySelector('.form');
+    if (form !== null) {
+        form.reset();
+    }
+}
 
-// //Отправка формы в профиль
-// function handleProfileFormSubmit(evt) {
-//     evt.preventDefault();
-//     profileName.textContent = nameInput.value;
-//     profileAbout.textContent = jobInput.value;
-//     closePopup(profilePopup);
-// }
+
 
 // // передает подпись
 
@@ -146,4 +172,4 @@ function handleCardClick({ name, link }) {
 //     validateProfileForm.toggleButtonState();
 // });
 
-// formNewElement.addEventListener('submit', submitFormHandlerPlace); // вызов функции создания карты по клику на кнопку "создать"
+// formNewElement.addEventListener('submit', submitFormHandlerPlace); // вызов функции создания карты по клику на кнопку
