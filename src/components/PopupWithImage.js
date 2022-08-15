@@ -1,6 +1,6 @@
-import { Popup } from './Popup.js';
+import { Popup } from './Popup.js'
 
-export class PopupWithImage extends Popup {
+export class PopupWithImage extends Popup { /** @module Отвечает за открытие картинки*/
     constructor(popupElement) {
         super(popupElement);
         this._popupPhotoTitle = document.querySelector('.popup__caption');

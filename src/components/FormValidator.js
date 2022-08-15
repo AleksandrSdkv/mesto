@@ -1,4 +1,4 @@
-export class FormValidator {
+export class FormValidator { /** @module Отвечает за валидацию формы*/
     constructor(config, formElement) {
         this._config = config;
         this._formElement = formElement;

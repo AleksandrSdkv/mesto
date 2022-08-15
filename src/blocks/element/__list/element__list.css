@@ -1,4 +1,4 @@
-.elements__list {
+.element__list {
     max-width: 880px;
     display: grid;
     grid-template-columns: fit-content(282px) fit-content(282px) fit-content(282px);
@@ -10,13 +10,13 @@
 }
 
 @media screen and (max-width: 800px) {
-    .elements__list {
+    .element__list {
         grid-template-columns: repeat(2, 2fr);
     }
 }
 
 @media screen and (max-width: 500px) {
-    .elements__list {
+    .element__list {
         grid-template-columns: 1fr;
     }
 }

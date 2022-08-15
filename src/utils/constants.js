@@ -28,7 +28,7 @@ export const profileName = document.querySelector('.profile__name');
 export const profileAbout = document.querySelector('.profile__about');
 export const profileEditButton = document.querySelector('.profile__edit-button');
 export const profilePopup = document.querySelector('.popup_type_profile');
-export const elementList = document.querySelector('.elements__list');
+export const elementList = document.querySelector('.element__list');
 
 export const profileForm = profilePopup.querySelector('.form');
 export const nameInput = profilePopup.querySelector('.form__input_type_name');

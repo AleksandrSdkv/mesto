@@ -1,20 +1,20 @@
 export class Card {
-    constructor(item, handleCardClick, cardtemplate) {
+    constructor(item, handleCardClick, cardtemplate) { /** @module Отвечает за генерацию карт*/
         this._link = item.link;
         this._name = item.name;
         this._handleCardClick = handleCardClick;
         this._cardTemplate = cardtemplate;
     }
     _getTemplate() {
-        const cardNewElement = document.querySelector(this._cardTemplate).content.querySelector(".elements__element").cloneNode(true);
+        const cardNewElement = document.querySelector(this._cardTemplate).content.querySelector(".element").cloneNode(true);
         return cardNewElement
     }
     generateCard() {
         this._element = this._getTemplate();
-        this.maskGroupImg = this._element.querySelector('.elements__mask-group');
-        this.maskGroupName = this._element.querySelector('.elements__place-name');
-        this._likeButton = this._element.querySelector('.elements__like');
-        this._btnRemoveCard = this._element.querySelector('.elements__btn-remove');
+        this.maskGroupImg = this._element.querySelector('.element__mask-group');
+        this.maskGroupName = this._element.querySelector('.element__place-name');
+        this._likeButton = this._element.querySelector('.element__like');
+        this._btnRemoveCard = this._element.querySelector('.element__btn-remove');
         this.maskGroupImg.src = this._link;
         this.maskGroupName.textContent = this._name;
         this.maskGroupImg.alt = this._name;
@@ -34,7 +34,7 @@ export class Card {
 
     }
     _handleLikeBtnClick() {
-        this._likeButton.classList.toggle('elements__like_active');
+        this._likeButton.classList.toggle('element__like_active');
     }
     _handleTrashBtnClick() {
         this._element.remove();

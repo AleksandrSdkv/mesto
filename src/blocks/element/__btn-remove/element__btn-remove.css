@@ -1,4 +1,4 @@
-.elements__btn-remove {
+.element__btn-remove {
     border: none;
     background: none;
     outline: none;
@@ -14,6 +14,6 @@
     top: 20px;
 }
 
-.elements__btn-remove:hover {
+.element__btn-remove:hover {
     opacity: .6;
 }

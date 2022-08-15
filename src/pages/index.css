@@ -18,16 +18,16 @@
 @import url(../blocks/profile/__edit-button/profile__edit-button.css);
 @import url(../blocks/profile/__place-button/profile__place-button.css);
 
-/* Блок Elements */
+/* Блок Element */
 
-@import url(../blocks/elements/__element/elements__element.css);
-@import url(../blocks/elements/__place-name/elements__place-name.css);
-@import url(../blocks/elements/__like/elements__like.css);
-@import url(../blocks/elements/__like/_active/elements__like_active.css);
-@import url(../blocks/elements/__mask-group/elements__mask-group.css);
-@import url(../blocks/elements/__list/elements__list.css);
-@import url(..//blocks/elements/__group/elements__group.css);
-@import url(../blocks/elements/__btn-remove/elements__btn-remove.css);
+@import url(../blocks/element/element.css);
+@import url(../blocks/element/__place-name/element__place-name.css);
+@import url(../blocks/element/__like/element__like.css);
+@import url(../blocks/element/__like/_active/element__like_active.css);
+@import url(../blocks/element/__mask-group/element__mask-group.css);
+@import url(../blocks/element/__list/element__list.css);
+@import url(..//blocks/element/__group/element__group.css);
+@import url(../blocks/element/__btn-remove/element__btn-remove.css);
 
 /* Блок footer */
 
@@ -42,6 +42,7 @@
 @import url(../blocks/popup/__button-close/popup__button-close.css);
 @import url(../blocks/popup/__container/_for_pic/popup__container_for_pic.css);
 @import url(../blocks/popup/__img/popup__img.css);
+@import url(../blocks/popup/_type/popup_type_pic.css);
 
 /* Блок Form */
 

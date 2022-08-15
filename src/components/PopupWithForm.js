@@ -1,6 +1,6 @@
 import { Popup } from "./Popup.js"
 
-export class PopupWithForm extends Popup {
+export class PopupWithForm extends Popup { /** @module Отвечает за открытие попапов форм*/
     constructor(popupElement, handleFormSubmit) {
         super(popupElement)
         this._popupElement = popupElement;
