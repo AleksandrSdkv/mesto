@@ -1,7 +1,7 @@
 export class Popup {
     constructor(popupElement) {
         this._popupElement = popupElement;
-        this._handleEscCloseBinded = this._handleEscClose.bind(this); // переименовать
+        this._handleEscCloseBinded = this._handleEscClose.bind(this);
     }
     open() {
         this._popupElement.classList.add('popup_opened');
