@@ -77,8 +77,8 @@ cardList.renderItems();
 const popupPice = new PopupWithImage(picturePopup)
 popupPice.setEventListeners();
 
-function handleCardClick({ name, link }) {
-    popupPice.open({ name, link });
+function handleCardClick(name, link) {
+    popupPice.open(name, link);
 };
 
 
@@ -87,9 +87,7 @@ function handleCardClick({ name, link }) {
  * @description - попап редактирвания профиля.
  */
 const handleProfileFormSubmit = ({ name, about }) => {
-    const user = name;
-    const info = about;
-    profileInfo.setUserInfo(user, info);
+    profileInfo.setUserInfo(name, about);
     popupProfileForm.close();
 };
 
@@ -101,8 +99,7 @@ popupProfileForm.setEventListeners();
  */
 profileEditButton.addEventListener('click', () => {
     validateProfileForm.resetVadlidation();
-    const profileValue = profileInfo.getUserInfo();
-    const { name, info } = profileValue;
+    const { name, info } = profileInfo.getUserInfo();
     nameInput.value = name;
     jobInput.value = info;
     validateProfileForm.toggleButtonState();
@@ -119,7 +116,7 @@ const profileInfo = new UserInfo(profileName, profileAbout);
  * @description - код создания новой карточки и работы попапа.
  */
 const handleAddElmForm = (formData) => {
-    submitFormHandlerPlace();
+    submitFormHandlerPlace(formData);
     popupNewElement.close()
 }
 
@@ -127,11 +124,9 @@ const popupNewElement = new PopupWithForm(newPlacePopup, handleAddElmForm);
 
 popupNewElement.setEventListeners();
 
-function submitFormHandlerPlace() {
-    const link = placeUrl.value;
-    const name = placeName.value;
-    const add = createCardClass(name, link);
-    cardList.addItem(add);
+function submitFormHandlerPlace({ place, url }) {
+    const cardElement = createCardClass(place, url);
+    cardList.addItem(cardElement);
 }
 
 
