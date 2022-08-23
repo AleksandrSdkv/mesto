@@ -89,9 +89,15 @@ function handleCardClick(name, link) {
  */
 const handleProfileFormSubmit = ({ name, about }) => {
     console.log({ name, about })
-    api.setUserData({ name, about }).then(res => console.log(res))
+    api.setUserData({ name: name, about: about })
+        .then(data => profileInfo.setUserInfo({
+            name: data.name,
+            info: data.about,
+            avatar: data.avatar
+        }));
     popupProfileForm.close();
-};
+}
+
 
 const popupProfileForm = new PopupWithForm(profilePopup, handleProfileFormSubmit);
 popupProfileForm.setEventListeners();
@@ -103,12 +109,15 @@ popupProfileForm.setEventListeners();
 /**
  * @description - класс содержит методы API запросов
  */
+
 api.getUserData().then(data => profileInfo.setUserInfo({
     /** @description - Загрузка информации о пользователе с сервера */
     name: data.name,
     info: data.about,
     avatar: data.avatar
 }));
+
+
 
 
 /**

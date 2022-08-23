@@ -29,18 +29,17 @@ export class Api {
             });
     }
     setUserData(data) {
-        console.log(data)
-        console.log(data.name)
-        console.log(data.info)
-        return fetch(`${this._url}/users/me`, { headers: this._headers }, {
+        return fetch(`${this._url}/users/me`, {
+            headers: this._headers,
             method: "PATCH",
             body: JSON.stringify({
-                name: 'Marie Skłodowska Curie',
-                about: 'Physicist and Chemist'
+                name: data.name,
+                about: data.about
             })
         }).then(res => {
-            console.log(res)
+            if (res.ok) {
+                return res.json();
+            }
         })
-
     }
 }
