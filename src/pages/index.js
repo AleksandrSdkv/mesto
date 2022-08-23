@@ -1,6 +1,6 @@
 import './index.css';
 import {
-    initialCards,
+
     profileName,
     profileAbout,
     profileEditButton,
@@ -11,19 +11,21 @@ import {
     jobInput,
     newPlacePopup,
     formNewElement,
-    placeName,
-    placeUrl,
     picturePopup,
     profilePlaceButton
 } from '../utils/constants.js';
 
 import { FormValidator } from '../components/FormValidator.js';
 import { Card } from '../components/Card.js';
-import { config } from '../utils/config.js';
+
 import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
+import { Api } from '../components/Api.js';
+import { config, apiConfig } from '../utils/config.js';
+
+
 
 
 /**
@@ -50,26 +52,25 @@ function createCardClass(name, link) {
     const cardNewElement = card.generateCard();
     return cardNewElement
 }
-
+const api = new Api(apiConfig);
 /**
  * @description - класс отрисовки массива карточек.
  */
+
 const cardList = new Section({
-        data: initialCards,
         renderer: (item) => {
             const element = createCardClass(item.name, item.link);
             cardList.addItem(element);
-
         },
     },
     elementList
 );
+
 /**
  * @description - функция создающая готовую карточку с данными.
  */
-cardList.renderItems();
 
-
+api.getUserCards().then(res => cardList.renderItems(res))
 
 /**
  * @description - класс попапа картинки.
@@ -82,17 +83,33 @@ function handleCardClick(name, link) {
 };
 
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * @description - попап редактирвания профиля.
  */
 const handleProfileFormSubmit = ({ name, about }) => {
-    profileInfo.setUserInfo(name, about);
+    console.log({ name, about })
+    api.setUserData({ name, about }).then(res => console.log(res))
     popupProfileForm.close();
 };
 
 const popupProfileForm = new PopupWithForm(profilePopup, handleProfileFormSubmit);
 popupProfileForm.setEventListeners();
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+/**
+ * @description - класс содержит методы API запросов
+ */
+api.getUserData().then(data => profileInfo.setUserInfo({
+    /** @description - Загрузка информации о пользователе с сервера */
+    name: data.name,
+    info: data.about,
+    avatar: data.avatar
+}));
+
 
 /**
  * @description - слушатель, который сбрасывает валидацию формы профиля и переносит значения в inputs

@@ -1,12 +1,14 @@
 export class Section { /** @module класс отрисовки массива карточек.  */
-    constructor({ data, renderer }, containerSelector) {
-        this._renderedItems = data;
+    constructor({ renderer }, containerSelector) {
+
         this._functionRender = renderer;
         this._container = containerSelector;
     }
 
-    renderItems() {
-        this._renderedItems.forEach(this._functionRender.bind(this));
+    renderItems(data) {
+
+        data.forEach(item => this._functionRender(item));
+
     }
     addItem(element) {
         this._container.prepend(element);
