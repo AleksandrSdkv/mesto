@@ -11,6 +11,7 @@ export class Section { /** @module класс отрисовки массива 
 
     }
     addItem(element) {
+        console.log(element)
         this._container.prepend(element);
     }
 }

@@ -15,3 +15,5 @@ export const placeUrl = newPlacePopup.querySelector('.form__input_type_about');
 
 export const picturePopup = document.querySelector('.popup_type_pic');
 export const profilePlaceButton = document.querySelector('.profile__place-button');
+
+export const notificationPopup = document.querySelector('.popup_type_notification');

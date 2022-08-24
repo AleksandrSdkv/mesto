@@ -25,7 +25,17 @@ import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
 import { config, apiConfig } from '../utils/config.js';
 
+fetch('https://mesto.nomoreparties.co/v1/cohort-48/cards/', {
+        headers: {
+            authorization: '25ce2e8c-2a55-4b07-a594-407cca6a6dd7',
+            "content-type": "application/json"
+        },
 
+    }, ).then(res => res.json())
+    .then((data) => {
+        console.log(data);
+
+    });
 
 
 /**
@@ -43,14 +53,22 @@ validateProfileForm.enableValidation();
 /**
  * @description - функция создающая готовую карточку с данными.
  */
-function createCardClass(name, link) {
-    const card = new Card({
-            name,
-            link
-        },
+function createCardClass(data) {
+    const card = new Card(
+        data,
         handleCardClick, '#card_template');
     const cardNewElement = card.generateCard();
+    // console.log(data)
     return cardNewElement
+}
+
+
+
+const handleAddElmForm = (data) => {
+    console.log(data)
+    cardList.addItem(createCardClass(data));
+    // api.pushNewCard(data)
+    popupNewElement.close()
 }
 const api = new Api(apiConfig);
 /**
@@ -58,13 +76,16 @@ const api = new Api(apiConfig);
  */
 
 const cardList = new Section({
-        renderer: (item) => {
-            const element = createCardClass(item.name, item.link);
+        renderer: (data) => {
+            const element = createCardClass(data);
             cardList.addItem(element);
         },
     },
     elementList
 );
+
+const popupNewElement = new PopupWithForm(newPlacePopup, handleAddElmForm);
+popupNewElement.setEventListeners();
 
 /**
  * @description - функция создающая готовую карточку с данными.
@@ -88,7 +109,7 @@ function handleCardClick(name, link) {
  * @description - попап редактирвания профиля.
  */
 const handleProfileFormSubmit = ({ name, about }) => {
-    console.log({ name, about })
+    // console.log({ name, about })
     api.setUserData({ name: name, about: about })
         .then(data => profileInfo.setUserInfo({
             name: data.name,
@@ -103,8 +124,8 @@ const popupProfileForm = new PopupWithForm(profilePopup, handleProfileFormSubmit
 popupProfileForm.setEventListeners();
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
+// const popupConfirmationForm = new PopupWithConfirmation(notificationPopup, )
+// popupConfirmationForm.setEventListeners();
 
 /**
  * @description - класс содержит методы API запросов
@@ -141,19 +162,9 @@ const profileInfo = new UserInfo(profileName, profileAbout);
 /**
  * @description - код создания новой карточки и работы попапа.
  */
-const handleAddElmForm = (formData) => {
-    submitFormHandlerPlace(formData);
-    popupNewElement.close()
-}
 
-const popupNewElement = new PopupWithForm(newPlacePopup, handleAddElmForm);
 
-popupNewElement.setEventListeners();
 
-function submitFormHandlerPlace({ place, url }) {
-    const cardElement = createCardClass(place, url);
-    cardList.addItem(cardElement);
-}
 
 
 profilePlaceButton.addEventListener('click', () => {

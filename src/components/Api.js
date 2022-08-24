@@ -3,6 +3,7 @@ export class Api {
         this._url = options.url;
         this._headers = options.headers;
 
+
     }
     getUserData() {
 
@@ -42,4 +43,25 @@ export class Api {
             }
         })
     }
+    pushNewCard(formData) {
+            return fetch(`${this._url}/cards`, {
+                headers: this._headers,
+                method: "POST",
+                body: JSON.stringify({
+                    name: formData.place,
+                    link: formData.url
+                })
+            }).then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+            })
+        }
+        // _isCardLiked() {
+        //     const isLiked = this._likes.find(like => like._id === this._ownerID);
+        //     return isLiked;
+        //     this._ownerID = '2341679b0114bf727da8f477'
+        //     this._isCardMine = data.owner._id === this._ownerID;
+        // }
+
 }
