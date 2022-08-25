@@ -1,5 +1,5 @@
 export class Card {
-    constructor(data, handleCardClick, cardtemplate, handleRemove) { /** @module Отвечает за генерацию карт*/
+    constructor(data, handleCardClick, cardtemplate, handleRemove, userData) { /** @module Отвечает за генерацию карт*/
         this._data = data;
 
         this._handleCardClick = handleCardClick;
@@ -14,7 +14,7 @@ export class Card {
         this.maskGroupName.textContent = this._data.name;
         this.maskGroupImg.alt = this._data.name;
         this.likesElement.textContent = this._data.likes.length;
-        this._ownerID = "2341679b0114bf727da8f477";
+        this._ownerID = userData._id
         this.data_id = data._id;
         this._isCardMine = data.owner._id === this._ownerID;
         this._removePic = handleRemove;

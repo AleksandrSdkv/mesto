@@ -1,16 +1,18 @@
+import { data } from "autoprefixer";
+
 export class UserInfo { /** @module Передает информацию на страницу */
     constructor(userNameSelector, userInfoSelector) {
-
-
         this._userName = userNameSelector;
         this._userInfo = userInfoSelector;
         this._avatarSelector = document.querySelector('.profile__avatar');
-        this._id = getUserId();
+
     }
 
     //Публичный метод возвращает объект с данными пользователя, используется при открытии попапа
     getUserInfo() {
+        console.log(this._data)
         return this._data;
+
     }
 
 
@@ -19,16 +21,12 @@ export class UserInfo { /** @module Передает информацию на �
         this._data = data;
         this._userName.textContent = data.name;
         this._userInfo.textContent = data.about;
-        return this._id = this._data;
 
     }
     getUserId() {
-
-        return this._id;
+        return this._data;
     }
     setAvatar(data) {
-
         this._avatarSelector.src = data.avatar;
-
     }
 }

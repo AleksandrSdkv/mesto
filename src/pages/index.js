@@ -57,7 +57,7 @@ function createCardClass(data) {
                     confirmPopup.close();
                 })
             });
-        },
+        }, profileInfo.getUserId()
     )
     const cardNewElement = card.generateCard();
 
@@ -100,13 +100,24 @@ function handleCardClick(name, link) {
 /**
  * @description - попап редактирвания профиля.
  */
-
+profileEditButton.addEventListener('click', () => {
+    validateProfileForm.resetVadlidation();
+    const { name, about } = profileInfo.getUserInfo();
+    nameInput.value = name;
+    jobInput.value = about;
+    validateProfileForm.toggleButtonState();
+    popupProfileForm.open()
+});
 const handleProfileFormSubmit = (data) => {
+    popupProfileForm.SaveButton(true)
+
     api.setUserData(data)
         .then((data) => {
             profileInfo.setUserInfo(data)
-        });
+        }).finally(() => {
+            popupProfileForm.SaveButton(false);
 
+        });
     popupProfileForm.close()
 }
 
@@ -132,12 +143,16 @@ api.getUserCards().then(res => cardList.renderItems(res)).catch((err) => {
 /** @description - Загрузка информации о пользователе с сервера */
 
 
-
 const avatarFunction = (data) => {
+    popupByAvatar.SaveButton(true);
     api.setAvatarData(data)
         .then((res) => {
             profileInfo.setAvatar(res)
+
+        }).finally(() => {
+            popupByAvatar.SaveButton(false)
         });
+
     popupByAvatar.close()
 }
 
@@ -145,10 +160,14 @@ const popupByAvatar = new PopupWithForm(avatarPopup, avatarFunction);
 
 
 const handleAddElmForm = (data) => {
+    popupNewElement.SaveButton(true)
     api.pushNewCard(data).then((res) => {
         cardList.addItem(createCardClass(res))
     }).catch((err) => {
         console.log(err); // выведем ошибку в консоль
+    }).finally(() => {
+        popupNewElement.SaveButton(false);
+
     });
     popupNewElement.close()
 }
@@ -171,21 +190,14 @@ btnOverlayAvatar.addEventListener('click', () => {
 /**
  * @description - слушатель, который сбрасывает валидацию формы профиля и переносит значения в inputs
  */
-profileEditButton.addEventListener('click', () => {
-    validateProfileForm.resetVadlidation();
-    const { name, about } = profileInfo.getUserInfo();
-    nameInput.value = name;
-    jobInput.value = about;
-    validateProfileForm.toggleButtonState();
-    popupProfileForm.open()
-});
+
 
 /**
  * @description - управление отображением информации о пользователе на странице.
  */
 const profileInfo = new UserInfo(profileName, profileAbout);
 
-profileInfo.getUserId()
+
 api.getUserData().then((data) => {
     profileInfo.getUserInfo(),
         profileInfo.setUserInfo(data)

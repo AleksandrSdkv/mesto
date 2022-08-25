@@ -40,6 +40,7 @@ export class FormValidator { /** @module Отвечает за валидаци�
         } else {
             this._setEnabledButton()
         }
+
     }
 
     _setDisabledButton() { //регулирует состояние кнопки off
