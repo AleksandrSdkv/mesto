@@ -1,27 +1,34 @@
 export class UserInfo { /** @module Передает информацию на страницу */
     constructor(userNameSelector, userInfoSelector) {
+
+
         this._userName = userNameSelector;
         this._userInfo = userInfoSelector;
         this._avatarSelector = document.querySelector('.profile__avatar');
-
-
+        this._id = getUserId();
     }
 
     //Публичный метод возвращает объект с данными пользователя, используется при открытии попапа
     getUserInfo() {
-        const userData = {};
-        userData.name = this._userName.textContent;
-        userData.info = this._userInfo.textContent;
-
-        return userData;
+        return this._data;
     }
+
 
     //Публичный метод принимает новые данные пользователя и добавляет их на страницу
-    setUserInfo({ name, info, avatar }) {
-        this._userName.textContent = name;
-        this._userInfo.textContent = info;
-        this._avatarSelector.src = avatar;
+    setUserInfo(data) {
+        this._data = data;
+        this._userName.textContent = data.name;
+        this._userInfo.textContent = data.about;
+        return this._id = this._data;
 
     }
+    getUserId() {
 
+        return this._id;
+    }
+    setAvatar(data) {
+
+        this._avatarSelector.src = data.avatar;
+
+    }
 }

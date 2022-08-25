@@ -1,6 +1,9 @@
 import './index.css';
 import {
-
+    formNewAvatar,
+    avatarPopup,
+    btnOverlayAvatar,
+    notificationPopup,
     profileName,
     profileAbout,
     profileEditButton,
@@ -21,21 +24,12 @@ import { Card } from '../components/Card.js';
 import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
 import { config, apiConfig } from '../utils/config.js';
 
-fetch('https://mesto.nomoreparties.co/v1/cohort-48/cards/', {
-        headers: {
-            authorization: '25ce2e8c-2a55-4b07-a594-407cca6a6dd7',
-            "content-type": "application/json"
-        },
 
-    }, ).then(res => res.json())
-    .then((data) => {
-        console.log(data);
-
-    });
 
 
 /**
@@ -43,12 +37,11 @@ fetch('https://mesto.nomoreparties.co/v1/cohort-48/cards/', {
  */
 const validateFormNewElement = new FormValidator(config, formNewElement);
 const validateProfileForm = new FormValidator(config, profileForm);
-
-
+const validateAvataForm = new FormValidator(config, formNewAvatar);
 
 validateFormNewElement.enableValidation();
 validateProfileForm.enableValidation();
-
+validateAvataForm.enableValidation();
 
 /**
  * @description - функция создающая готовую карточку с данными.
@@ -56,21 +49,27 @@ validateProfileForm.enableValidation();
 function createCardClass(data) {
     const card = new Card(
         data,
-        handleCardClick, '#card_template');
+        handleCardClick, '#card_template', (currentCard, removeCard) => {
+            confirmPopup.open();
+            confirmPopup.setConfirmAction(() => {
+                api.deleteCard(currentCard._id).then(() => {
+                    removeCard();
+                    confirmPopup.close();
+                })
+            });
+        },
+    )
     const cardNewElement = card.generateCard();
-    // console.log(data)
+
     return cardNewElement
 }
+// api.putLike()
+
+/**
+ * @description - Добавление новой карточки через форму.
+ */
 
 
-
-const handleAddElmForm = (data) => {
-    console.log(data)
-    cardList.addItem(createCardClass(data));
-    // api.pushNewCard(data)
-    popupNewElement.close()
-}
-const api = new Api(apiConfig);
 /**
  * @description - класс отрисовки массива карточек.
  */
@@ -84,14 +83,8 @@ const cardList = new Section({
     elementList
 );
 
-const popupNewElement = new PopupWithForm(newPlacePopup, handleAddElmForm);
-popupNewElement.setEventListeners();
 
-/**
- * @description - функция создающая готовую карточку с данными.
- */
 
-api.getUserCards().then(res => cardList.renderItems(res))
 
 /**
  * @description - класс попапа картинки.
@@ -104,39 +97,73 @@ function handleCardClick(name, link) {
 };
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * @description - попап редактирвания профиля.
  */
-const handleProfileFormSubmit = ({ name, about }) => {
-    // console.log({ name, about })
-    api.setUserData({ name: name, about: about })
-        .then(data => profileInfo.setUserInfo({
-            name: data.name,
-            info: data.about,
-            avatar: data.avatar
-        }));
-    popupProfileForm.close();
-}
 
+const handleProfileFormSubmit = (data) => {
+    api.setUserData(data)
+        .then((data) => {
+            profileInfo.setUserInfo(data)
+        });
+
+    popupProfileForm.close()
+}
 
 const popupProfileForm = new PopupWithForm(profilePopup, handleProfileFormSubmit);
 popupProfileForm.setEventListeners();
-/////////////////////////////////////////////////////////////////////////////////////////////////
 
-// const popupConfirmationForm = new PopupWithConfirmation(notificationPopup, )
-// popupConfirmationForm.setEventListeners();
+
+const confirmPopup = new PopupWithConfirmation(notificationPopup)
+confirmPopup.setEventListeners()
 
 /**
  * @description - класс содержит методы API запросов
  */
+const api = new Api(apiConfig);
 
-api.getUserData().then(data => profileInfo.setUserInfo({
-    /** @description - Загрузка информации о пользователе с сервера */
-    name: data.name,
-    info: data.about,
-    avatar: data.avatar
-}));
+/**
+ * @description - функция создающая карточки из массива.
+ */
+api.getUserCards().then(res => cardList.renderItems(res)).catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+});
+
+/** @description - Загрузка информации о пользователе с сервера */
+
+
+
+const avatarFunction = (data) => {
+    api.setAvatarData(data)
+        .then((res) => {
+            profileInfo.setAvatar(res)
+        });
+    popupByAvatar.close()
+}
+
+const popupByAvatar = new PopupWithForm(avatarPopup, avatarFunction);
+
+
+const handleAddElmForm = (data) => {
+    api.pushNewCard(data).then((res) => {
+        cardList.addItem(createCardClass(res))
+    }).catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+    });
+    popupNewElement.close()
+}
+const popupNewElement = new PopupWithForm(newPlacePopup, handleAddElmForm);
+popupNewElement.setEventListeners();
+
+
+
+popupByAvatar.setEventListeners();
+
+btnOverlayAvatar.addEventListener('click', () => {
+    validateAvataForm.resetVadlidation();
+    popupByAvatar.open();
+    validateAvataForm.toggleButtonState();
+})
 
 
 
@@ -146,9 +173,9 @@ api.getUserData().then(data => profileInfo.setUserInfo({
  */
 profileEditButton.addEventListener('click', () => {
     validateProfileForm.resetVadlidation();
-    const { name, info } = profileInfo.getUserInfo();
+    const { name, about } = profileInfo.getUserInfo();
     nameInput.value = name;
-    jobInput.value = info;
+    jobInput.value = about;
     validateProfileForm.toggleButtonState();
     popupProfileForm.open()
 });
@@ -158,15 +185,14 @@ profileEditButton.addEventListener('click', () => {
  */
 const profileInfo = new UserInfo(profileName, profileAbout);
 
-
-/**
- * @description - код создания новой карточки и работы попапа.
- */
-
-
-
-
-
+profileInfo.getUserId()
+api.getUserData().then((data) => {
+    profileInfo.getUserInfo(),
+        profileInfo.setUserInfo(data)
+    profileInfo.setAvatar(data)
+}).catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+});
 profilePlaceButton.addEventListener('click', () => {
     validateFormNewElement.resetVadlidation();
     popupNewElement.open()

@@ -1,8 +1,11 @@
+import { Popup } from "./Popup.js"
 export class PopupWithConfirmation extends Popup {
     constructor(popupElement) {
         super(popupElement)
         this._popupElement = popupElement;
+        this._formElement = this._popupElement.querySelector('.form');
         this._setConfirmAction = () => {}
+
     }
     setEventListeners() {
         super.setEventListeners();
@@ -14,4 +17,6 @@ export class PopupWithConfirmation extends Popup {
     setConfirmAction(action) {
         this._setConfirmAction = action;
     }
+
+
 }

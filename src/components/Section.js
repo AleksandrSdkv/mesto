@@ -7,11 +7,11 @@ export class Section { /** @module класс отрисовки массива 
 
     renderItems(data) {
 
-        data.forEach(item => this._functionRender(item));
+        data.reverse().forEach(item => this._functionRender(item));
 
     }
     addItem(element) {
-        console.log(element)
+
         this._container.prepend(element);
     }
 }

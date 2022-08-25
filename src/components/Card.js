@@ -1,6 +1,7 @@
 export class Card {
-    constructor(data, handleCardClick, cardtemplate) { /** @module Отвечает за генерацию карт*/
+    constructor(data, handleCardClick, cardtemplate, handleRemove) { /** @module Отвечает за генерацию карт*/
         this._data = data;
+
         this._handleCardClick = handleCardClick;
         this._cardTemplate = cardtemplate;
         this._element = this._getTemplate();
@@ -12,35 +13,40 @@ export class Card {
         this.maskGroupImg.src = this._data.link;
         this.maskGroupName.textContent = this._data.name;
         this.maskGroupImg.alt = this._data.name;
-        console.log(this._data)
-        console.log(this._element)
-            // this.likesElement.textContent = this._data.likes.length;
+        this.likesElement.textContent = this._data.likes.length;
+        this._ownerID = "2341679b0114bf727da8f477";
+        this.data_id = data._id;
+        this._isCardMine = data.owner._id === this._ownerID;
+        this._removePic = handleRemove;
+
         this._setEventListeners()
     }
+
     _getTemplate() {
         const cardNewElement = document.querySelector(this._cardTemplate).content.querySelector(".element").cloneNode(true);
         return cardNewElement
     }
     generateCard() {
-
+        if (this._isCardMine) {
+            this._btnRemoveCard.classList.remove('popup_hidden');
+        }
         return this._element
     }
-
-
-
 
     _setEventListeners() {
         this._likeButton.addEventListener('click', () => {
             this._handleLikeBtnClick();
         });
         this._btnRemoveCard.addEventListener("click", () => {
-            this._handleTrashBtnClick();
+            this._removePic(this._data, () => {
+                this._handleTrashBtnClick();
+            });
         });
         this.maskGroupImg.addEventListener("click", () => {
             this._handleCardClick({ name: this._data.name, link: this._data.link });
         });
-
     }
+
     _handleLikeBtnClick() {
         this._likeButton.classList.toggle('element__like-button_active');
     }

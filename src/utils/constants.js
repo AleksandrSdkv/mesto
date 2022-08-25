@@ -17,3 +17,6 @@ export const picturePopup = document.querySelector('.popup_type_pic');
 export const profilePlaceButton = document.querySelector('.profile__place-button');
 
 export const notificationPopup = document.querySelector('.popup_type_notification');
+export const btnOverlayAvatar = document.querySelector('.profile__overlay');
+export const avatarPopup = document.querySelector('.popup_type_for-avatar');
+export const formNewAvatar = avatarPopup.querySelector('.form');
