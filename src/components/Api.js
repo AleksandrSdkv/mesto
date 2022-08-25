@@ -24,7 +24,7 @@ export class Api {
                 }
             })
             .catch((err) => {
-                console.log(err); // выведем ошибку в консоль
+                console.log('Ошибка: ', err); // выведем ошибку в консоль
             });
     }
     setUserData(data) {
@@ -70,9 +70,8 @@ export class Api {
 
     }
 
-    deleteCard(dataId) {
-        return fetch(`https://mesto.nomoreparties.co/v1/cohort-48/cards/${dataId}`, {
-
+    deleteCard(cardID) {
+        return fetch(`https://mesto.nomoreparties.co/v1/cohort-48/cards/${cardID}`, {
             headers: this._headers,
             method: 'DELETE',
         }).then(res => {
@@ -82,13 +81,12 @@ export class Api {
             }
         })
     }
-    putLike(dataId) {
-        return fetch(`https://mesto.nomoreparties.co/v1/cohort-48/cards/${dataId}/likes`, {
+    setLike(cardID) {
+        return fetch(`https://mesto.nomoreparties.co/v1/cohort-48/cards/${cardID}/likes`, {
             headers: this._headers,
             method: 'PUT',
         }).then(res => {
             if (res.ok) {
-                console.log(res);
                 return res.json();
             }
         })
@@ -100,7 +98,6 @@ export class Api {
             method: 'DELETE',
         }).then(res => {
             if (res.ok) {
-                console.log(res);
                 return res.json();
             }
         })

@@ -20,7 +20,6 @@ import {
 
 import { FormValidator } from '../components/FormValidator.js';
 import { Card } from '../components/Card.js';
-
 import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
@@ -33,7 +32,7 @@ import { config, apiConfig } from '../utils/config.js';
 
 
 /**
- * @description - запускает валидацию.
+ * @description - Создание классов валидации форм попапов(Профиль, добавление карт, смена аватара),запускает валидацию.
  */
 const validateFormNewElement = new FormValidator(config, formNewElement);
 const validateProfileForm = new FormValidator(config, profileForm);
@@ -44,31 +43,51 @@ validateProfileForm.enableValidation();
 validateAvataForm.enableValidation();
 
 /**
- * @description - функция создающая готовую карточку с данными.
+ * @description - класс содержит методы API запросов
+ */
+const api = new Api(apiConfig);
+
+/**
+ * @description - функция вызывающая методы классов API, UserInfo, PopupWithForm.Создающая карточку и наполняет функциональностью
  */
 function createCardClass(data) {
+    data.currentUser = profileInfo.getUserInfo();
     const card = new Card(
-        data,
-        handleCardClick, '#card_template', (currentCard, removeCard) => {
-            confirmPopup.open();
-            confirmPopup.setConfirmAction(() => {
-                api.deleteCard(currentCard._id).then(() => {
-                    removeCard();
-                    confirmPopup.close();
-                })
-            });
-        }, profileInfo.getUserId()
-    )
+        data, '#card_template', {
+            onClick: handleCardClick, // открытие попапа
+            onDeleteCard: (currentCard, removeCard) => { // функциональность удаление карты
+                confirmPopup.open();
+                confirmPopup.setConfirmAction(() => {
+                    api.deleteCard(currentCard._id).then(() => { // отправляем запрос
+                            removeCard();
+                            confirmPopup.close();
+                        })
+                        .catch((err) => {
+                            console.log('Ошибка: ', err); // выведем ошибку в консоль
+                        });
+                });
+            },
+            onLike: (currentCard, likeCallback) => { // функциональность постановки лайка
+                if (card.isLiked()) {
+                    api.removeLike(currentCard._id).then((updatedCard) => likeCallback(updatedCard.likes))
+                        .catch((err) => {
+                            console.log('Ошибка: ', err); // выведем ошибку в консоль
+                        });
+                } else {
+                    api.setLike(currentCard._id).then((updatedCard) => likeCallback(updatedCard.likes))
+                        .catch((err) => {
+                            console.log('Ошибка: ', err); // выведем ошибку в консоль
+                        });
+                }
+            }
+        })
     const cardNewElement = card.generateCard();
-
     return cardNewElement
 }
-// api.putLike()
 
 /**
  * @description - Добавление новой карточки через форму.
  */
-
 
 /**
  * @description - класс отрисовки массива карточек.
@@ -83,9 +102,6 @@ const cardList = new Section({
     elementList
 );
 
-
-
-
 /**
  * @description - класс попапа картинки.
  */
@@ -95,7 +111,6 @@ popupPice.setEventListeners();
 function handleCardClick(name, link) {
     popupPice.open(name, link);
 };
-
 
 /**
  * @description - попап редактирвания профиля.
@@ -108,15 +123,17 @@ profileEditButton.addEventListener('click', () => {
     validateProfileForm.toggleButtonState();
     popupProfileForm.open()
 });
-const handleProfileFormSubmit = (data) => {
+const handleProfileFormSubmit = (data) => { // колбек 141 строка
     popupProfileForm.SaveButton(true)
-
     api.setUserData(data)
         .then((data) => {
             profileInfo.setUserInfo(data)
-        }).finally(() => {
+        })
+        .catch((err) => {
+            console.log('Ошибка: ', err); // выведем ошибку в консоль
+        })
+        .finally(() => {
             popupProfileForm.SaveButton(false);
-
         });
     popupProfileForm.close()
 }
@@ -124,14 +141,12 @@ const handleProfileFormSubmit = (data) => {
 const popupProfileForm = new PopupWithForm(profilePopup, handleProfileFormSubmit);
 popupProfileForm.setEventListeners();
 
+/**
+ * @description - Попап перед удалением карты.
+ */
 
 const confirmPopup = new PopupWithConfirmation(notificationPopup)
 confirmPopup.setEventListeners()
-
-/**
- * @description - класс содержит методы API запросов
- */
-const api = new Api(apiConfig);
 
 /**
  * @description - функция создающая карточки из массива.
@@ -140,43 +155,8 @@ api.getUserCards().then(res => cardList.renderItems(res)).catch((err) => {
     console.log(err); // выведем ошибку в консоль
 });
 
-/** @description - Загрузка информации о пользователе с сервера */
 
-
-const avatarFunction = (data) => {
-    popupByAvatar.SaveButton(true);
-    api.setAvatarData(data)
-        .then((res) => {
-            profileInfo.setAvatar(res)
-
-        }).finally(() => {
-            popupByAvatar.SaveButton(false)
-        });
-
-    popupByAvatar.close()
-}
-
-const popupByAvatar = new PopupWithForm(avatarPopup, avatarFunction);
-
-
-const handleAddElmForm = (data) => {
-    popupNewElement.SaveButton(true)
-    api.pushNewCard(data).then((res) => {
-        cardList.addItem(createCardClass(res))
-    }).catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-    }).finally(() => {
-        popupNewElement.SaveButton(false);
-
-    });
-    popupNewElement.close()
-}
-const popupNewElement = new PopupWithForm(newPlacePopup, handleAddElmForm);
-popupNewElement.setEventListeners();
-
-
-
-popupByAvatar.setEventListeners();
+/** @description - Работа с аватаром пользователя */
 
 btnOverlayAvatar.addEventListener('click', () => {
     validateAvataForm.resetVadlidation();
@@ -184,29 +164,59 @@ btnOverlayAvatar.addEventListener('click', () => {
     validateAvataForm.toggleButtonState();
 })
 
+const avatarFunction = (data) => {
+    popupByAvatar.SaveButton(true);
+    api.setAvatarData(data)
+        .then((res) => {
+            profileInfo.setAvatar(res)
 
+        }).catch((err) => {
+            console.log('Ошибка: ', err); // выведем ошибку в консоль
+        })
+        .finally(() => {
+            popupByAvatar.SaveButton(false)
+        });
+    popupByAvatar.close()
+}
 
+const popupByAvatar = new PopupWithForm(avatarPopup, avatarFunction);
+popupByAvatar.setEventListeners();
 
 /**
- * @description - слушатель, который сбрасывает валидацию формы профиля и переносит значения в inputs
+ * @description - Работа с попапом создания карточки
  */
 
+const handleAddElmForm = (data) => { // колбек 202 строка
+    popupNewElement.SaveButton(true)
+    api.pushNewCard(data).then((res) => {
+            cardList.addItem(createCardClass(res))
+        })
+        .catch((err) => {
+            console.log(err); // выведем ошибку в консоль
+        })
+        .finally(() => {
+            popupNewElement.SaveButton(false);
+        });
+    popupNewElement.close()
+}
+const popupNewElement = new PopupWithForm(newPlacePopup, handleAddElmForm); // попап создания карты
 
-/**
- * @description - управление отображением информации о пользователе на странице.
- */
-const profileInfo = new UserInfo(profileName, profileAbout);
-
-
-api.getUserData().then((data) => {
-    profileInfo.getUserInfo(),
-        profileInfo.setUserInfo(data)
-    profileInfo.setAvatar(data)
-}).catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-});
+popupNewElement.setEventListeners();
 profilePlaceButton.addEventListener('click', () => {
     validateFormNewElement.resetVadlidation();
     popupNewElement.open()
     validateFormNewElement.toggleButtonState();
 })
+
+/**
+ * @description - управление отображением информации о пользователе на странице.
+ */
+const profileInfo = new UserInfo(profileName, profileAbout);
+api.getUserData().then((data) => {
+        profileInfo.getUserInfo(),
+            profileInfo.setUserInfo(data)
+        profileInfo.setAvatar(data)
+    })
+    .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+    });

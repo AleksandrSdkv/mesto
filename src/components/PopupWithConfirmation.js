@@ -9,12 +9,12 @@ export class PopupWithConfirmation extends Popup {
     }
     setEventListeners() {
         super.setEventListeners();
-        this._formElement.addEventListener('submit', (evt) => {
+        this._formElement.addEventListener('submit', (evt) => { //Подтверждение удаления
             evt.preventDefault();
             this._setConfirmAction();
         })
     }
-    setConfirmAction(action) {
+    setConfirmAction(action) { //Передает колбек в конструктор
         this._setConfirmAction = action;
     }
 

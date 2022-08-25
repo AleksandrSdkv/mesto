@@ -11,12 +11,12 @@ export class Popup {
         this._popupElement.classList.remove('popup_opened');
         document.removeEventListener('keydown', this._handleEscCloseBinded);
     }
-    _handleEscClose(evt) {
+    _handleEscClose(evt) { //Метод позволяющий закрывать попапы по Esc
         if (evt.key === 'Escape') {
             this.close();
         }
     }
-    setEventListeners() {
+    setEventListeners() { //Метод позволяющий закрывать попапы по клику на крестик и оверлей
         this._popupElement.addEventListener('mousedown', (evt) => {
             if (evt.target.classList.contains('popup_opened') || (evt.target.classList.contains('popup__close'))) {
                 this.close();

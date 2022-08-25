@@ -8,9 +8,8 @@ export class UserInfo { /** @module Передает информацию на �
 
     }
 
-    //Публичный метод возвращает объект с данными пользователя, используется при открытии попапа
+    //Публичный метод принимает объект с данными пользователя
     getUserInfo() {
-        console.log(this._data)
         return this._data;
 
     }
@@ -23,10 +22,9 @@ export class UserInfo { /** @module Передает информацию на �
         this._userInfo.textContent = data.about;
 
     }
-    getUserId() {
-        return this._data;
-    }
+
     setAvatar(data) {
+        this._data = data;
         this._avatarSelector.src = data.avatar;
     }
 }
