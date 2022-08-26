@@ -82,7 +82,7 @@ function createCardClass(data) {
             }
         })
     const cardNewElement = card.generateCard();
-    return cardNewElement
+    return cardNewElement;
 }
 
 /**
@@ -124,18 +124,19 @@ profileEditButton.addEventListener('click', () => {
     popupProfileForm.open()
 });
 const handleProfileFormSubmit = (data) => { // колбек 141 строка
-    popupProfileForm.SaveButton(true)
+    popupProfileForm.saveButton(true);
     api.setUserData(data)
         .then((data) => {
-            profileInfo.setUserInfo(data)
+            profileInfo.setUserInfo(data);
+            popupProfileForm.close();
         })
         .catch((err) => {
             console.log('Ошибка: ', err); // выведем ошибку в консоль
         })
         .finally(() => {
-            popupProfileForm.SaveButton(false);
+            popupProfileForm.saveButton(false);
         });
-    popupProfileForm.close()
+
 }
 
 const popupProfileForm = new PopupWithForm(profilePopup, handleProfileFormSubmit);
@@ -145,15 +146,22 @@ popupProfileForm.setEventListeners();
  * @description - Попап перед удалением карты.
  */
 
-const confirmPopup = new PopupWithConfirmation(notificationPopup)
-confirmPopup.setEventListeners()
+const confirmPopup = new PopupWithConfirmation(notificationPopup);
+confirmPopup.setEventListeners();
 
-/**
- * @description - функция создающая карточки из массива.
- */
-api.getUserCards().then(res => cardList.renderItems(res)).catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-});
+
+Promise.all([api.getUserCards(), api.getUserData()])
+    .then(([initialCards, data]) => {
+        profileInfo.getUserInfo(),
+            profileInfo.setUserInfo(data)
+        profileInfo.setAvatar(data)
+        cardList.renderItems(initialCards)
+    })
+    .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+    });
+
+
 
 
 /** @description - Работа с аватаром пользователя */
@@ -165,18 +173,19 @@ btnOverlayAvatar.addEventListener('click', () => {
 })
 
 const avatarFunction = (data) => {
-    popupByAvatar.SaveButton(true);
+    popupByAvatar.saveButton(true);
     api.setAvatarData(data)
         .then((res) => {
-            profileInfo.setAvatar(res)
+            profileInfo.setAvatar(res);
+            popupByAvatar.close();
 
         }).catch((err) => {
             console.log('Ошибка: ', err); // выведем ошибку в консоль
         })
         .finally(() => {
-            popupByAvatar.SaveButton(false)
+            popupByAvatar.saveButton(false);
         });
-    popupByAvatar.close()
+
 }
 
 const popupByAvatar = new PopupWithForm(avatarPopup, avatarFunction);
@@ -187,17 +196,17 @@ popupByAvatar.setEventListeners();
  */
 
 const handleAddElmForm = (data) => { // колбек 202 строка
-    popupNewElement.SaveButton(true)
+    popupNewElement.saveButton(true);
     api.pushNewCard(data).then((res) => {
             cardList.addItem(createCardClass(res))
+            popupNewElement.close()
         })
         .catch((err) => {
             console.log(err); // выведем ошибку в консоль
         })
         .finally(() => {
-            popupNewElement.SaveButton(false);
+            popupNewElement.saveButton(false);
         });
-    popupNewElement.close()
 }
 const popupNewElement = new PopupWithForm(newPlacePopup, handleAddElmForm); // попап создания карты
 
@@ -211,12 +220,6 @@ profilePlaceButton.addEventListener('click', () => {
 /**
  * @description - управление отображением информации о пользователе на странице.
  */
+
+
 const profileInfo = new UserInfo(profileName, profileAbout);
-api.getUserData().then((data) => {
-        profileInfo.getUserInfo(),
-            profileInfo.setUserInfo(data)
-        profileInfo.setAvatar(data)
-    })
-    .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-    });

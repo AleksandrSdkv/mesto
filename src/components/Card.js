@@ -41,11 +41,7 @@ export class Card {
             this._data,
             (updatedLikes) => {
                 this._data.likes = updatedLikes;
-                if (this.isLiked()) {
-                    this._likeButton.classList.add('element__like-button_active');
-                } else {
-                    this._likeButton.classList.remove('element__like-button_active');
-                }
+                this._likeButton.classList.toggle('element__like-button_active', this.isLiked());
                 this.likesElement.textContent = this._data.likes.length;
             });
     }
