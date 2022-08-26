@@ -28,12 +28,12 @@ export class Card {
 
     isLiked() {
         return this._data.likes.some((item) => {
-            return this._data.currentUser._id === item._id
+            return this._data.currentUser.id === item._id
         })
     }
     isOwner() {
 
-        return this._data.currentUser._id === this._data.owner._id
+        return this._data.currentUser.id === this._data.owner._id
     }
 
     _handleLike() {

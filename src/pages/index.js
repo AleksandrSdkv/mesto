@@ -47,7 +47,7 @@ const api = new Api(apiConfig);
  * @description - функция вызывающая методы классов API, UserInfo, PopupWithForm.Создающая карточку и наполняет функциональностью
  */
 function createCardClass(data) {
-    data.currentUser = profileInfo.getUserId();
+    data.currentUser = profileInfo.getUserInfo();
     const card = new Card(
         data, '#card_template', {
             onClick: handleCardClick, // открытие попапа

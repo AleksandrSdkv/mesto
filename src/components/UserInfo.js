@@ -7,10 +7,7 @@ export class UserInfo { /** @module Передает информацию на �
     }
 
     //Публичный метод принимает объект с данными пользователя
-    getUserId() {
-        return this._data;
 
-    }
     getUserInfo() {
         const userData = {};
         userData.name = this._userName.textContent;
