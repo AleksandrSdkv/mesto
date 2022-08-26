@@ -32,6 +32,7 @@ export class Card {
         })
     }
     isOwner() {
+
         return this._data.currentUser._id === this._data.owner._id
     }
 

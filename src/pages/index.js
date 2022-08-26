@@ -17,7 +17,6 @@ import {
     picturePopup,
     profilePlaceButton
 } from '../utils/constants.js';
-
 import { FormValidator } from '../components/FormValidator.js';
 import { Card } from '../components/Card.js';
 import { Section } from '../components/Section.js';
@@ -27,9 +26,6 @@ import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
 import { config, apiConfig } from '../utils/config.js';
-
-
-
 
 /**
  * @description - Создание классов валидации форм попапов(Профиль, добавление карт, смена аватара),запускает валидацию.
@@ -51,7 +47,7 @@ const api = new Api(apiConfig);
  * @description - функция вызывающая методы классов API, UserInfo, PopupWithForm.Создающая карточку и наполняет функциональностью
  */
 function createCardClass(data) {
-    data.currentUser = profileInfo.getUserInfo();
+    data.currentUser = profileInfo.getUserId();
     const card = new Card(
         data, '#card_template', {
             onClick: handleCardClick, // открытие попапа
@@ -85,14 +81,6 @@ function createCardClass(data) {
     return cardNewElement;
 }
 
-/**
- * @description - Добавление новой карточки через форму.
- */
-
-/**
- * @description - класс отрисовки массива карточек.
- */
-
 const cardList = new Section({
         renderer: (data) => {
             const element = createCardClass(data);
@@ -123,7 +111,7 @@ profileEditButton.addEventListener('click', () => {
     validateProfileForm.toggleButtonState();
     popupProfileForm.open()
 });
-const handleProfileFormSubmit = (data) => { // колбек 141 строка
+const handleProfileFormSubmit = (data) => { // колбек 130 строка
     popupProfileForm.saveButton(true);
     api.setUserData(data)
         .then((data) => {
@@ -149,20 +137,14 @@ popupProfileForm.setEventListeners();
 const confirmPopup = new PopupWithConfirmation(notificationPopup);
 confirmPopup.setEventListeners();
 
-
 Promise.all([api.getUserCards(), api.getUserData()])
     .then(([initialCards, data]) => {
-        profileInfo.getUserInfo(),
-            profileInfo.setUserInfo(data)
-        profileInfo.setAvatar(data)
+        profileInfo.setUserInfo(data)
         cardList.renderItems(initialCards)
     })
     .catch((err) => {
         console.log(err); // выведем ошибку в консоль
     });
-
-
-
 
 /** @description - Работа с аватаром пользователя */
 
@@ -176,7 +158,7 @@ const avatarFunction = (data) => {
     popupByAvatar.saveButton(true);
     api.setAvatarData(data)
         .then((res) => {
-            profileInfo.setAvatar(res);
+            profileInfo.setUserInfo(res);
             popupByAvatar.close();
 
         }).catch((err) => {
@@ -185,9 +167,7 @@ const avatarFunction = (data) => {
         .finally(() => {
             popupByAvatar.saveButton(false);
         });
-
 }
-
 const popupByAvatar = new PopupWithForm(avatarPopup, avatarFunction);
 popupByAvatar.setEventListeners();
 
@@ -195,7 +175,7 @@ popupByAvatar.setEventListeners();
  * @description - Работа с попапом создания карточки
  */
 
-const handleAddElmForm = (data) => { // колбек 202 строка
+const handleAddElmForm = (data) => { // колбек 191 строка
     popupNewElement.saveButton(true);
     api.pushNewCard(data).then((res) => {
             cardList.addItem(createCardClass(res))
@@ -220,6 +200,5 @@ profilePlaceButton.addEventListener('click', () => {
 /**
  * @description - управление отображением информации о пользователе на странице.
  */
-
 
 const profileInfo = new UserInfo(profileName, profileAbout);

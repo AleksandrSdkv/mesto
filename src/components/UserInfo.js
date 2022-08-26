@@ -1,32 +1,30 @@
-import { data } from "autoprefixer";
-
 export class UserInfo { /** @module Передает информацию на страницу */
     constructor(userNameSelector, userInfoSelector) {
         this._userName = userNameSelector;
-        console.log(userNameSelector)
         this._userInfo = userInfoSelector;
         this._avatarSelector = document.querySelector('.profile__avatar');
 
     }
 
     //Публичный метод принимает объект с данными пользователя
-    getUserInfo() {
+    getUserId() {
         return this._data;
 
     }
+    getUserInfo() {
+        const userData = {};
+        userData.name = this._userName.textContent;
+        userData.about = this._userInfo.textContent;
+        userData.id = this._userId;
 
-
-    //Публичный метод принимает новые данные пользователя и добавляет их на страницу
-    setUserInfo(data) {
-        this._data = data;
-        console.log(this._data)
-        this._userName.textContent = data.name;
-        this._userInfo.textContent = data.about;
-
+        return userData;
     }
 
-    setAvatar(data) {
+    setUserInfo(data) {
         this._data = data;
+        this._userName.textContent = data.name;
+        this._userInfo.textContent = data.about;
         this._avatarSelector.src = data.avatar;
+        this._userId = data._id;
     }
 }
