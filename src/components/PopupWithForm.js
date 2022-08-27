@@ -3,9 +3,10 @@ import { Popup } from "./Popup.js"
 export class PopupWithForm extends Popup { /** @module Отвечает за открытие попапов форм*/
     constructor(popupSelector, handleFormSubmit) { //Передаем колбек
         super(popupSelector)
-        this._popupSelector = popupSelector;
+
+
         this._handleFormSubmit = handleFormSubmit;
-        this._formElement = this._popupSelector.querySelector('.form');
+        this._formElement = this._popup.querySelector('.form');
         this._btnSave = this._formElement.querySelector('.form__bottom-submit');
         this._btnSaveText = this._btnSave.textContent;
         this._formInputList = Array.from(this._formElement.querySelectorAll('.form__input')); //Собираем коллекцию инпутов

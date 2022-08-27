@@ -1,20 +1,15 @@
 import './index.css';
 import {
     formNewAvatar,
-    avatarPopup,
     btnOverlayAvatar,
-    notificationPopup,
     profileName,
     profileAbout,
     profileEditButton,
-    profilePopup,
     elementList,
     profileForm,
     nameInput,
     jobInput,
-    newPlacePopup,
     formNewElement,
-    picturePopup,
     profilePlaceButton
 } from '../utils/constants.js';
 import { FormValidator } from '../components/FormValidator.js';
@@ -93,7 +88,8 @@ const cardList = new Section({
 /**
  * @description - класс попапа картинки.
  */
-const popupPice = new PopupWithImage(picturePopup)
+const popupPice = new PopupWithImage('.popup_type_pic')
+
 popupPice.setEventListeners();
 
 function handleCardClick(name, link) {
@@ -127,14 +123,14 @@ const handleProfileFormSubmit = (data) => { // колбек 130 строка
 
 }
 
-const popupProfileForm = new PopupWithForm(profilePopup, handleProfileFormSubmit);
+const popupProfileForm = new PopupWithForm('.popup_type_profile', handleProfileFormSubmit);
 popupProfileForm.setEventListeners();
 
 /**
  * @description - Попап перед удалением карты.
  */
 
-const confirmPopup = new PopupWithConfirmation(notificationPopup);
+const confirmPopup = new PopupWithConfirmation('.popup_type_notification');
 confirmPopup.setEventListeners();
 
 Promise.all([api.getUserCards(), api.getUserData()])
@@ -168,7 +164,7 @@ const avatarFunction = (data) => {
             popupByAvatar.saveButton(false);
         });
 }
-const popupByAvatar = new PopupWithForm(avatarPopup, avatarFunction);
+const popupByAvatar = new PopupWithForm('.popup_type_for-avatar', avatarFunction);
 popupByAvatar.setEventListeners();
 
 /**
@@ -188,7 +184,7 @@ const handleAddElmForm = (data) => { // колбек 191 строка
             popupNewElement.saveButton(false);
         });
 }
-const popupNewElement = new PopupWithForm(newPlacePopup, handleAddElmForm); // попап создания карты
+const popupNewElement = new PopupWithForm('.popup_type_place', handleAddElmForm); // попап создания карты
 
 popupNewElement.setEventListeners();
 profilePlaceButton.addEventListener('click', () => {

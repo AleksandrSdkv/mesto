@@ -5,6 +5,7 @@ export class PopupWithImage extends Popup { /** @module Отвечает за о
         super(popupSelector);
         this._popupPhotoTitle = document.querySelector('.popup__caption');
         this._popupPhotoImg = document.querySelector('.popup__img');
+        super.setEventListeners();
     }
 
     open({ name, link }) { //открытие картинки и передача значений
