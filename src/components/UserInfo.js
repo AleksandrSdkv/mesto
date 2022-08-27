@@ -18,7 +18,6 @@ export class UserInfo { /** @module Передает информацию на �
     }
 
     setUserInfo(data) {
-        this._data = data;
         this._userName.textContent = data.name;
         this._userInfo.textContent = data.about;
         this._avatarSelector.src = data.avatar;
